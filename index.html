@@ -20,7 +20,7 @@
     --radius-lg:   12px;
     --mono:        'JetBrains Mono', 'Fira Mono', 'Cascadia Code', monospace;
     --sans:        system-ui, -apple-system, sans-serif;
-
+ 
     /* scope tag colours */
     --c-world-bg:  #E6F1FB; --c-world-tx:  #185FA5;
     --c-local-bg:  #EAF3DE; --c-local-tx:  #3B6D11;
@@ -49,7 +49,7 @@
       --c-fix-bg:    #3d1414; --c-fix-tx:    #f09595;
     }
   }
-
+ 
   body {
     font-family: var(--sans);
     font-size: 14px;
@@ -57,17 +57,17 @@
     background: var(--bg);
     line-height: 1.6;
   }
-
+ 
   /* ── Layout ── */
   .page { max-width: 900px; margin: 0 auto; padding: 32px 20px 80px; }
-
+ 
   /* ── Header ── */
   header { margin-bottom: 28px; }
   header h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; }
   header p  { font-size: 13px; color: var(--text2); margin-top: 4px; }
   .header-meta { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
   .header-meta span { font-size: 12px; color: var(--text3); }
-
+ 
   /* ── Controls ── */
   .controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
   #search {
@@ -102,11 +102,11 @@
   .fbtn.active.f-block  { background: var(--c-block-bg);  color: var(--c-block-tx);  }
   .fbtn.active.f-new    { background: var(--c-new-bg);    color: var(--c-new-tx);    }
   .fbtn.active.f-all    { background: var(--bg3);         color: var(--text);        }
-
+ 
   /* ── Legend ── */
   .legend { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11px; color: var(--text2); margin-bottom: 18px; align-items: center; }
   .legend-item { display: flex; align-items: center; gap: 4px; }
-
+ 
   /* ── Sections ── */
   .section { margin-bottom: 6px; border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
   .sec-head {
@@ -125,7 +125,7 @@
   .sec-count { font-size: 11px; color: var(--text3); }
   .sec-body { display: none; border-top: 0.5px solid var(--border); }
   .sec-body.open { display: block; }
-
+ 
   /* ── Variable rows ── */
   .var-row {
     padding: 9px 14px 9px 18px;
@@ -140,7 +140,7 @@
   .var-row.d2 { padding-left: 48px; background: var(--bg); }
   .var-row.d3 { padding-left: 64px; background: var(--bg); }
   .var-row.is-new { border-left: 2px solid #1D9E75; }
-
+ 
   .var-name {
     font-family: var(--mono);
     font-size: 12px;
@@ -151,7 +151,7 @@
   .var-range { font-size: 11px; color: var(--text3); white-space: nowrap; padding-top: 2px; }
   .var-desc { font-size: 12px; color: var(--text2); grid-column: 1 / -1; line-height: 1.5; }
   .row-meta { grid-column: 1 / -1; display: flex; gap: 5px; flex-wrap: wrap; align-items: center; margin-top: 2px; }
-
+ 
   /* ── Tags ── */
   .tag {
     display: inline-block; padding: 1px 7px;
@@ -164,25 +164,83 @@
   .tag.block  { background: var(--c-block-bg);  color: var(--c-block-tx);  }
   .badge-new  { display: inline-block; padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: 600; background: var(--c-new-bg); color: var(--c-new-tx); margin-left: 5px; vertical-align: middle; }
   .badge-fix  { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 11px; background: var(--c-fix-bg); color: var(--c-fix-tx); }
-
+ 
   /* ── Stats bar ── */
   #stats-bar { font-size: 12px; color: var(--text3); margin-bottom: 6px; }
-
+ 
   /* ── Empty state ── */
   .empty { padding: 32px; text-align: center; color: var(--text3); font-size: 13px; }
-
+ 
+  /* ── Copy button ── */
+  .var-copy {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; padding: 0;
+    border: none; background: transparent; color: var(--text3);
+    cursor: pointer; font-size: 12px; margin-left: 6px;
+    opacity: 0; transition: opacity .12s, color .12s;
+  }
+  .var-row:hover .var-copy { opacity: 1; }
+  .var-copy:hover { color: var(--text); background: var(--bg2); border-radius: 4px; }
+  .var-copy.copied { color: #2ecc71; }
+ 
+  /* ── Modal ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5); z-index: 1000;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--bg); border-radius: var(--radius-lg); max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .modal-header {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 20px; border-bottom: 0.5px solid var(--border);
+  }
+  .modal-title { flex: 1; }
+  .modal-title h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; font-family: var(--mono); }
+  .modal-range { font-size: 12px; color: var(--text3); }
+  .modal-close {
+    background: none; border: none; font-size: 20px;
+    color: var(--text2); cursor: pointer; padding: 2px;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal-body { padding: 20px; }
+  .modal-section { margin-bottom: 20px; }
+  .modal-section:last-child { margin-bottom: 0; }
+  .modal-label { font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .modal-desc { font-size: 13px; color: var(--text); line-height: 1.6; margin-bottom: 12px; }
+  .modal-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .modal-related { border-top: 0.5px solid var(--border); padding-top: 16px; }
+  .modal-related-list { display: flex; flex-direction: column; gap: 8px; }
+  .modal-related-item {
+    padding: 10px; border-radius: var(--radius); background: var(--bg2);
+    border: 0.5px solid var(--border); cursor: pointer; transition: background .12s;
+  }
+  .modal-related-item:hover { background: var(--bg3); }
+  .modal-related-name { font-family: var(--mono); font-size: 12px; font-weight: 500; margin-bottom: 2px; }
+  .modal-related-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+  .modal-references-list { display: flex; flex-direction: column; gap: 8px; }
+  .modal-reference-item {
+    background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius);
+    padding: 12px; font-family: var(--mono); font-size: 11px; line-height: 1.5;
+  }
+  .modal-reference-name { color: var(--text); font-weight: 600; margin-bottom: 4px; }
+  .modal-reference-details { color: var(--text2); font-size: 10px; }
+  .modal-reference-detail { margin-bottom: 2px; }
+  .modal-reference-detail strong { color: var(--text3); }
+ 
   /* ── Responsive ── */
   @media (max-width: 500px) {
     .var-row { padding-left: 12px; }
     .var-row.d1 { padding-left: 20px; }
     .var-row.d2 { padding-left: 28px; }
     .var-row.d3 { padding-left: 36px; }
+    .modal { width: 95%; max-height: 90vh; }
   }
 </style>
 </head>
 <body>
 <div class="page">
-
+ 
 <header>
   <h1>Shader Variable Reference</h1>
   <p>Rendering-level variables for world, biome, and block shader configuration.</p>
@@ -191,34 +249,65 @@
     <span id="total-count"></span>
   </div>
 </header>
-
+ 
 <div class="controls">
   <input id="search" type="search" placeholder="Search variables, descriptions…" autocomplete="off" oninput="doSearch(this.value)">
   <div class="filter-row" id="filters">
     <button class="fbtn f-all active"   onclick="setFilter('all',this)">All</button>
     <button class="fbtn f-world"  onclick="setFilter('world',this)">--world</button>
-    <button class="fbtn f-local"  onclick="setFilter('local',this)">--local</button>
+    <button class="fbtn f-local"  onclick="setFilter('custom',this)">--custom</button>
     <button class="fbtn f-global" onclick="setFilter('global',this)">--global</button>
     <button class="fbtn f-biome"  onclick="setFilter('biome',this)">--biome</button>
     <button class="fbtn f-block"  onclick="setFilter('block',this)">--block</button>
     <button class="fbtn f-new"    onclick="setFilter('new',this)">✦ New</button>
   </div>
 </div>
-
+ 
 <div class="legend">
   <span class="legend-item"><span class="tag world">--world</span> world-level</span>
-  <span class="legend-item"><span class="tag local">--local</span> biome-level</span>
+  <span class="legend-item"><span class="tag local">--custom</span> custom-level</span>
   <span class="legend-item"><span class="tag global">--global</span> global / post</span>
   <span class="legend-item"><span class="tag biome">--biome</span> fluid biome</span>
   <span class="legend-item"><span class="tag block">--block</span> per-block</span>
   <span class="legend-item"><span style="display:inline-block;width:3px;height:14px;background:#1D9E75;border-radius:2px;vertical-align:middle;margin-right:3px;"></span> new variable</span>
 </div>
-
+ 
 <div id="stats-bar"></div>
 <div id="sections"></div>
-
+ 
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        <h2 id="modalVarName"></h2>
+        <div class="modal-range" id="modalVarRange"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-label">Description</div>
+        <div class="modal-desc" id="modalDesc"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-label">Scopes</div>
+        <div class="modal-tags" id="modalScopeTags"></div>
+      </div>
+      <div class="modal-section modal-related" id="modalRelated" style="display:none;">
+        <div class="modal-label">Related Variables</div>
+        <div class="modal-related-list" id="modalRelatedList"></div>
+      </div>
+      <div class="modal-section" id="modalReferences" style="display:none;">
+        <div class="modal-label">Referenced Variables</div>
+        <div class="modal-references-list" id="modalReferencesList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
 </div><!-- /page -->
-
+ 
 <script>
 /* ═══════════════════════════════════════════════════════
    DATA
@@ -231,6 +320,8 @@
      p        {number}   indent depth: 1, 2, or 3 (optional, omit for root)
      isNew    {boolean}  marks variable as newly added (optional)
      fix      {string}   shows a warning note, e.g. for a renamed typo (optional)
+     i        {string}   shows an info note, e.g. for a deprecated variable (optional)
+     {n:"",r:"",s[],d:""}
 
    To add a new section: push a new object into SECTIONS below.
    Fields:
@@ -240,19 +331,19 @@
      vars     {array}    variable objects (see above)
 ═══════════════════════════════════════════════════════ */
 
-const W="world", L="local", G="global", B="biome", BL="block";
+const W="world", C="custom", G="global", B="biome", BL="block";
 
 const SECTIONS = [
 
 /* ─── HAZE ─── */
 { id:"haze", title:"Haze", vars:[
-  {n:"HAZE_BASEWORLD",                        r:"bool",       s:[W],    d:"Enables base haze in a world"},
-  {n:"HAZE_BASEWORLD_DENSITY",                r:"0–255",      s:[W],    d:"Amount of particles per unit", p:1},
-  {n:"HAZE_BASEWORLD_DENSITY_VARIATION",      r:"0–255",      s:[W],    d:"Range the density can deviate from base", p:2},
-  {n:"HAZE_BASEWORLD_DENSITY_VARIATION_RANGE",r:"0–255",      s:[W],    d:"Max change per minute", p:3},
+  {n:"HAZE_BASEWORLD",                        r:"bool",       s:[W],    d:"Enables base haze in a world", i:H1},
+  {n:"HAZE_BASEWORLD_DENSITY",                r:"0–255",      s:[W],    d:"Amount of particles per unit", p:1, i:H2, f:H1},
+  {n:"HAZE_BASEWORLD_DENSITY_VARIATION",      r:"0–255",      s:[W],    d:"Range the density can deviate from base", p:2, i:H3, f:H1,H2},
+  {n:"HAZE_BASEWORLD_DENSITY_VARIATION_RANGE",r:"0–255",      s:[W],    d:"Max change per minute", p:3, i:H4, f:H1,H2,H3},
   {n:"HAZE_BASEWORLD_COLOR",                  r:"hex[,hex…]", s:[W],    d:"Haze colour(s). Repeat a hex to increase its probability", p:1},
-  {n:"HAZE_BASEWORLD_TYPE",                   r:"0–255",      s:[W],    d:"0=none 1=fog 2=steam 3=smoke 4=dust 5=vapor 6=mist 7=ash 8=haze 9+=custom", p:1, fix:"Missing --world scope tag in original"},
-  {n:"HAZE_BASEWORLD_LIGHT_ABSORPTION",       r:"0–15",       s:[W],    d:"Light absorbed by haze (0=none, 15=all)", p:1, fix:"Original typo: ABsorption → ABSORPTION"},
+  {n:"HAZE_BASEWORLD_TYPE",                   r:"0–255",      s:[W],    d:"0=none 1=fog 2=steam 3=smoke 4=dust 5=vapor 6=mist 7=ash 8=haze 9+=custom", p:1},
+  {n:"HAZE_BASEWORLD_LIGHT_ABSORPTION",       r:"0–15",       s:[W],    d:"Light absorbed by haze (0=none, 15=all)", p:1},
   {n:"HAZE_BASEWORLD_LIGHT_SCATTERING",       r:"0–15",       s:[W],    d:"Light scattered by haze", p:1},
   {n:"HAZE_BASEWORLD_HEIGHT_FALLOFF",         r:"0–15",       s:[W],    d:"Haze fall rate in 0.1 blocks/sec", p:1},
   {n:"HAZE_BASEWORLD_WIND_SPEED",             r:"0–255",      s:[W],    d:"Wind influence speed in 0.05 blocks/sec (0=off)", p:1},
@@ -260,70 +351,86 @@ const SECTIONS = [
   {n:"HAZE_BASEWORLD_ANISOTROPY",             r:"-1–1",       s:[W],    d:"Light scatter direction. -1=back, 1=forward, 0=neutral", p:1},
   {n:"HAZE_BASEWORLD_NOISE_SCALE",            r:"0–255",      s:[W],    d:"Scale of density noise pattern", p:1},
   {n:"HAZE_BASEWORLD_DISTANCE_FALLOFF",       r:"0–255",      s:[W],    d:"Density falloff with view distance", p:1},
+  {n:"HAZE_BASEWORLD_LAYER_PRIORITY",         r:"0-255",      s:[W],    d:"Z-order when multiple custom haze layers overlap. Meaning on which layer the base haze gets rendered",isNew:true},
 
-  {n:"HAZE_BASEBIOME",                        r:"bool",       s:[L],    d:"Enables base haze in a biome"},
-  {n:"HAZE_BASEBIOME_DENSITY",                r:"0–255",      s:[L],    d:"Particles per cubic unit", p:1, fix:"Original: DENSITYVARIATION (no underscore) — standardised"},
-  {n:"HAZE_BASEBIOME_DENSITY_VARIATION",      r:"0–255",      s:[L],    d:"± particle deviation", p:2},
-  {n:"HAZE_BASEBIOME_DENSITY_VARIATION_RANGE",r:"0–255",      s:[L],    d:"Max change per minute", p:3},
-  {n:"HAZE_BASEBIOME_COLOR",                  r:"hex[,hex…]", s:[L],    d:"Haze colour(s)", p:1},
-  {n:"HAZE_BASEBIOME_TYPE",                   r:"0–255",      s:[L],    d:"0=none 1=fog 2=steam 3=smoke 4=dust 5=vapor 6=mist 7=ash 8=haze 9+=custom", p:1, fix:"Missing --local scope tag in original"},
-  {n:"HAZE_BASEBIOME_LIGHT_ABSORPTION",       r:"0–15",       s:[L],    d:"Light absorbed by haze", p:1, fix:"Original typo: ABORPTION → ABSORPTION"},
-  {n:"HAZE_BASEBIOME_LIGHT_SCATTERING",       r:"0–15",       s:[L],    d:"Light scattered", p:1},
-  {n:"HAZE_BASEBIOME_HEIGHT_FALLOFF",         r:"0–15",       s:[L],    d:"Fall rate in 0.1 blocks/sec", p:1},
-  {n:"HAZE_BASEBIOME_WIND_SPEED",             r:"0–255",      s:[L],    d:"Wind influence in 0.05 blocks/sec", p:1},
-  {n:"HAZE_BASEBIOME_WIND_DIRECTION",         r:"0–360",      s:[L],    d:"Wind direction in degrees", p:1},
-  {n:"HAZE_BASEBIOME_ANISOTROPY",             r:"-1–1",       s:[L],    d:"Scatter direction", p:1},
-  {n:"HAZE_BASEBIOME_NOISE_SCALE",            r:"0–255",      s:[L],    d:"Noise pattern scale", p:1},
-  {n:"HAZE_BASEBIOME_DISTANCE_FALLOFF",       r:"0–255",      s:[L],    d:"Distance density falloff", p:1},
+  {n:"HAZE_BASEBIOME",                        r:"bool",       s:[B],    d:"Enables base haze in a biome"},
+  {n:"HAZE_BASEBIOME_DENSITY",                r:"0–255",      s:[B],    d:"Particles per cubic unit", p:1},
+  {n:"HAZE_BASEBIOME_DENSITY_VARIATION",      r:"0–255",      s:[B],    d:"± particle deviation", p:2},
+  {n:"HAZE_BASEBIOME_DENSITY_VARIATION_RANGE",r:"0–255",      s:[B],    d:"Max change per minute", p:3},
+  {n:"HAZE_BASEBIOME_COLOR",                  r:"hex[,hex…]", s:[B],    d:"Haze colour(s)", p:1},
+  {n:"HAZE_BASEBIOME_TYPE",                   r:"0–255",      s:[B],    d:"0=none 1=fog 2=steam 3=smoke 4=dust 5=vapor 6=mist 7=ash 8=haze 9+=custom", p:1},
+  {n:"HAZE_BASEBIOME_LIGHT_ABSORPTION",       r:"0–15",       s:[B],    d:"Light absorbed by haze", p:1},
+  {n:"HAZE_BASEBIOME_LIGHT_SCATTERING",       r:"0–15",       s:[B],    d:"Light scattered", p:1},
+  {n:"HAZE_BASEBIOME_HEIGHT_FALLOFF",         r:"0–15",       s:[B],    d:"Fall rate in 0.1 blocks/sec", p:1},
+  {n:"HAZE_BASEBIOME_WIND_SPEED",             r:"0–255",      s:[B],    d:"Wind influence in 0.05 blocks/sec", p:1},
+  {n:"HAZE_BASEBIOME_WIND_DIRECTION",         r:"0–360",      s:[B],    d:"Wind direction in degrees", p:1},
+  {n:"HAZE_BASEBIOME_ANISOTROPY",             r:"-1–1",       s:[B],    d:"Scatter direction", p:1},
+  {n:"HAZE_BASEBIOME_NOISE_SCALE",            r:"0–255",      s:[B],    d:"Noise pattern scale", p:1},
+  {n:"HAZE_BASEBIOME_DISTANCE_FALLOFF",       r:"0–255",      s:[B],    d:"Distance density falloff", p:1},
+  {n:"HAZE_BIOME_BLEND",                      r:"bool",       s:[B],    d:"Enables biome blending"},
+  {n:"HAZE_BIOME_BLEND_RADIUS",               r:"0-63",       s:[B],    d:"Radius in blocks over which haze blends at biome borders",p:1, isNew:true},
+  {n:"HAZE_BIOME_BLEND_MODE",                 r:"0-3",        s:[B],    d:"0=linear 1=cubic 2=nearest 3=custom",p:1, isNew:true},
+  {n:"HAZE_BIOME_LAYER_PRIORITY",             r:"0-255",      s:[B],    d:"Z-order when multiple custom haze layers overlap",p:1, isNew:true},
+  {n:"HAZE_BIOME_REMOVE_WORLD_HAZE",          r:"bool",       s:[B],    d:"Removes world haze in the area where biome haze is enabled", p:2, isNew:true},
 
-  {n:"HAZE_CUSTOM",                           r:"bool",       s:[L],    d:"Enables a custom haze layer on top of base biome haze"},
-  {n:"HAZE_CUSTOM_DENSITY",                   r:"0–255",      s:[L],    d:"Particles per cubic unit", p:1},
-  {n:"HAZE_CUSTOM_DENSITY_VARIATION",         r:"0–255",      s:[L],    d:"± deviation", p:2},
-  {n:"HAZE_CUSTOM_DENSITY_VARIATION_RANGE",   r:"0–255",      s:[L],    d:"Max change per minute", p:3},
-  {n:"HAZE_CUSTOM_COLOR",                     r:"hex[,hex…]", s:[L],    d:"Colour(s) of custom haze", p:1},
-  {n:"HAZE_CUSTOM_TYPE",                      r:"0–255",      s:[L],    d:"Type index (same table as base)", p:1},
-  {n:"HAZE_CUSTOM_LIGHT_ABSORPTION",          r:"0–15",       s:[L],    d:"Light absorption", p:1},
-  {n:"HAZE_CUSTOM_LIGHT_SCATTERING",          r:"0–15",       s:[L],    d:"Light scattering", p:1},
-  {n:"HAZE_CUSTOM_HEIGHT_FALLOFF",            r:"0–15",       s:[L],    d:"Fall rate in 0.1 blocks/sec", p:1},
-  {n:"HAZE_CUSTOM_WIND_SPEED",                r:"0–255",      s:[L],    d:"Wind in 0.05 blocks/sec", p:1},
-  {n:"HAZE_CUSTOM_WIND_DIRECTION",            r:"0–360",      s:[L],    d:"Wind direction", p:1},
-  {n:"HAZE_CUSTOM_ANISOTROPY",                r:"-1–1",       s:[L],    d:"Scatter direction", p:1},
-  {n:"HAZE_CUSTOM_NOISE_SCALE",               r:"0–255",      s:[L],    d:"Noise scale", p:1},
-  {n:"HAZE_CUSTOM_DISTANCE_FALLOFF",          r:"0–255",      s:[L],    d:"Distance falloff", p:1},
+  {n:"HAZE_CUSTOM",                           r:"bool",       s:[C],    d:"Enables a custom haze layer on top of base biome haze"},
+  {n:"HAZE_CUSTOM_DENSITY",                   r:"0–255",      s:[C],    d:"Particles per cubic unit", p:1},
+  {n:"HAZE_CUSTOM_DENSITY_VARIATION",         r:"0–255",      s:[C],    d:"± deviation", p:2},
+  {n:"HAZE_CUSTOM_DENSITY_VARIATION_RANGE",   r:"0–255",      s:[C],    d:"Max change per minute", p:3},
+  {n:"HAZE_CUSTOM_COLOR",                     r:"hex[,hex…]", s:[C],    d:"Colour(s) of custom haze", p:1},
+  {n:"HAZE_CUSTOM_TYPE",                      r:"0–255",      s:[C],    d:"Type index (same table as base)", p:1},
+  {n:"HAZE_CUSTOM_LIGHT_ABSORPTION",          r:"0–15",       s:[C],    d:"Light absorption", p:1},
+  {n:"HAZE_CUSTOM_LIGHT_SCATTERING",          r:"0–15",       s:[C],    d:"Light scattering", p:1},
+  {n:"HAZE_CUSTOM_HEIGHT_FALLOFF",            r:"0–15",       s:[C],    d:"Fall rate in 0.1 blocks/sec", p:1},
+  {n:"HAZE_CUSTOM_WIND_SPEED",                r:"0–255",      s:[C],    d:"Wind in 0.05 blocks/sec", p:1},
+  {n:"HAZE_CUSTOM_WIND_DIRECTION",            r:"0–360",      s:[C],    d:"Wind direction", p:1},
+  {n:"HAZE_CUSTOM_ANISOTROPY",                r:"-1–1",       s:[C],    d:"Scatter direction", p:1},
+  {n:"HAZE_CUSTOM_NOISE_SCALE",               r:"0–255",      s:[C],    d:"Noise scale", p:1},
+  {n:"HAZE_CUSTOM_DISTANCE_FALLOFF",          r:"0–255",      s:[C],    d:"Distance falloff", p:1},
+  {n:"HAZE_CUSTOM_BLEND",                     r:"bool",       s:[C],    d:"Enables custom haze blending"},
+  {n:"HAZE_CUSTOM_BLEND_RADIUS",              r:"0-63",       s:[C],    d:"Radius in blocks over which custom haze blends at biome borders",p:1, isNew:true},
+  {n:"HAZE_CUSTOM_BLEND_MODE",                r:"0-3",        s:[C],    d:"0=linear 1=cubic 2=nearest 3=custom",p:1, isNew:true},
+  {n:"HAZE_CUSTOM_LAYER_PRIORITY",            r:"0-255",      s:[C],    d:"Z-order when multiple custom haze layers overlap",p:1, isNew:true},
+  {n:"HAZE_CUSTOM_REMOVE_WORLD_HAZE",         r:"bool",       s:[C],    d:"Removes world haze in the area where custom haze is enabled", p:2, isNew:true},
+  {n:"HAZE_CUSTOM_REMOVE_BIOME_HAZE",         r:"bool",       s:[C],    d:"Removes biome haze in the area where custom haze is enabled", p:2, isNew:true},
 
-  {n:"HAZE_PARTICLES_TO_HAZE",                r:"bool",       s:[L],    d:"Auto-renders existing particle systems as volumetric haze"},
-  {n:"HAZE_PARTICLE_TYPE",                    r:"0–255",      s:[L],    d:"Which particle type ID to convert", p:1, fix:"Missing --local scope tag in original"},
-  {n:"HAZE_VARIATION_AMOUNT",                 r:"0–255",      s:[L],    d:"Max change per minute from particle haze", p:1, fix:"Missing = sign and --local scope tag in original"},
+  {n:"HAZE_PARTICLES_TO_HAZE",                r:"bool",       s:[C],    d:"Auto-renders existing particle systems as volumetric haze"},
+  {n:"HAZE_VARIATION_AMOUNT",                 r:"0–255",      s:[C],    d:"Max change per minute from particle haze", p:1},
+  {n:"HAZE_TYPE",                             r:"0–255",      s:[C],    d:"Type index (same table as base)", p:1},
+  {n:"HAZE_PARTICLE_TYPE",                    r:"W,B,C",      s:[C],    d:"Which particle type ID to convert", p:2},
+]},
 
-  {n:"HAZE_BIOME_BLEND_RADIUS",               r:"0–255",      s:[L],    d:"Radius in blocks over which haze blends at biome borders", isNew:true},
-  {n:"HAZE_BIOME_BLEND_MODE",                 r:"0–3",        s:[L],    d:"0=linear 1=cubic 2=nearest 3=custom", isNew:true, p:1},
-  {n:"HAZE_LAYER_PRIORITY",                   r:"0–15",       s:[L],    d:"Z-order when multiple custom haze layers overlap. Higher = rendered on top", isNew:true},
+/* ─── LIGHT EMMISION ─── */
+{ id:"light_emission", title:"Light Emission", vars:[
+  {n:"LIGHT_EMISSION",                        r:"bool",       s:[BL],    d:"Enables light emision", isNew:true},
+  {n:"LIGHT_EMISSION_COLOR",                  r:"hex",        s:[BL],    d:"Colour of emitted light", isNew:true},
+  {n:"LIGHT_EMISSION_RANGE_OVERRIDE",         r:"0 to 63",    s:[BL],    d:"If set to a value above 0, the light will override the range of the light", p:1, isNew:true},
+  {n:"LIGHT_EMMISION_TYPE",                   r:"0-3",        s:[BL],    d:"0 = Point Light / Laser, 1 = Flashlight [CONE], 2 = Surround Illumination, 3 = Custom", p:1, isNew:true},
+  {n:"LIGHT_EMMISION_ANGLE_X_AXIS",           r:"0-360",      s:[BL],    d:"Direction of the lighting on the X Axis", p:1, isNew:true},
+  {n:"LIGHT_EMMISION_ANGLE_Y_AXIS",           r:"0-360",      s:[BL],    d:"Direction of the lighting on the Y Axis", p:1, isNew:true},
+  {n:"LIGHT_EMMISION_ANGLE_Z_AXIS",           r:"0-360",      s:[BL],    d:"Direction of the lighting on the Z Axis", p:1, isNew:true},
+  {n:"LIGHT_EMMISION_SOFTNESS",               r:"0-63",       s:[BL],    d:"The softness of the light, 0 = hard edge, 63 = very soft edge", p:1, isNew:true},
+  {n:"LIGHT_TEXEL_MODE",                      r:"bool",       s:[BL],    d:"If true, texel rendering will be active, if false, it will be rendered in the middle of a block", p:1, isNew:true},
+  {n:"LIGHT_TEXEL_BLENDING",                  r:"0-15",       s:[BL],    d:"How much the texels blend with each other", p:2, isNew:true},
+  {n:"LIGHT_SUBSURFACE_SCATTERING",           r:"bool",       s:[BL],    d:"Enables SSS for semi-translucent blocks (leaves, ice)", isNew:true},
+  {n:"LIGHT_ADVANCED_SUBSURFACE_SCATTERING",  r:"bool",       s:[BL],    d:"Enables pixel based SSS for semi translucent blocks", isNew:true},
 ]},
 
 /* ─── LIGHT HANDLING ─── */
 { id:"light", title:"Light Handling", vars:[
-  {n:"LIGHT_ABSORPTION",                      r:"0–15",       s:[L],    d:"Reduces light level by this value. 0=all passes, 15=none passes", fix:"Original typo: ABSORBION"},
-  {n:"LIGHT_REFLECTION",                      r:"0–15",       s:[L],    d:"Fraction of light reflected. Remainder passes through"},
-  {n:"LIGHT_REFLECTIONBLUR",                  r:"0–15",       s:[L],    d:"Blurriness of reflected light"},
-  {n:"LIGHT_SCATTERING",                      r:"bool",       s:[L],    d:"Enables directional light scattering"},
-  {n:"LIGHT_SCATTERING_VARIATION",            r:"0–255",      s:[L],    d:"Scatter spread in 0.1 degree steps", p:1},
-  {n:"LIGHT_CHROMATICABBERATION",             r:"bool",       s:[L],    d:"Enables chromatic aberration on transmitted light"},
-  {n:"LIGHT_CHROMATICABBERATION_STRENGTH",    r:"0–7",        s:[L],    d:"0=none, 3=default, 7=full-pixel shift", p:1},
-  {n:"LIGHT_FALLOFF_GLOBAL",                  r:"0–63",       s:[L],    d:"Per-block light falloff via Inverse Square. See falloff table"},
-  {n:"LIGHT_FALLOFF_WORLD",                   r:"0–63",       s:[W],    d:"World-wide light falloff override"},
-  {n:"LIGHT_FLICKER",                         r:"bool",       s:[L],    d:"Enables light flickering"},
-  {n:"LIGHT_FLICKER_RATE",                    r:"0–63",       s:[L],    d:"Flicker frequency in 10ms steps", p:1},
-  {n:"LIGHT_FLICKER_RATE_VARIATION",          r:"0–63",       s:[L],    d:"Frequency jitter in 10ms steps", p:2},
-  {n:"LIGHT_FLICKER_INTENSITY",               r:"0–15",       s:[L],    d:"Flicker amplitude in light levels", p:1},
-  {n:"LIGHT_FLICKER_INTENSITY_VARIATION",     r:"0–63",       s:[L],    d:"Intensity jitter in 10ms steps", p:2},
-  {n:"LIGHT_EMISSION_COLOR",                  r:"hex",        s:[BL],   d:"Tints the emitted light of a block", isNew:true},
-  {n:"LIGHT_EMISSION_SPECTRUM",               r:"0–7",        s:[BL],   d:"0=white 1=warm 2=cool 3=fire 4=neon 5=magic 6=moon 7=custom", isNew:true, p:1},
-  {n:"LIGHT_EMISSION_RANGE",                  r:"0–63",       s:[BL],   d:"Override emission range in blocks", isNew:true, p:1},
-  {n:"LIGHT_CONE_ANGLE",                      r:"0–180",      s:[BL],   d:"Spotlight cone angle in degrees (0=point light, 180=sphere)", isNew:true},
-  {n:"LIGHT_CONE_SOFTNESS",                   r:"0–15",       s:[BL],   d:"Edge softness of spotlight cone", isNew:true, p:1},
-  {n:"LIGHT_SUBSURFACE_SCATTERING",           r:"bool",       s:[BL],   d:"Enables SSS for semi-translucent blocks (leaves, ice)", isNew:true},
-  {n:"LIGHT_SUBSURFACE_RADIUS",               r:"0–15",       s:[BL],   d:"SSS scatter radius in 0.1 block steps", isNew:true, p:1},
-  {n:"LIGHT_SUBSURFACE_COLOR",                r:"hex",        s:[BL],   d:"Colour tint of subsurface scattered light", isNew:true, p:1},
+  {n:"LIGHT_ABSORPTION",                      r:"0–15",       s:[BL],    d:"Reduces light level by this value per reflection. 0=all light gets absorbed, 15=all reflects"},
+  {n:"LIGHT_REFLECTIONBLUR",                  r:"0–15",       s:[BL],    d:"Blurriness of reflected light"},
+  {n:"LIGHT_SCATTERING",                      r:"bool",       s:[BL],    d:"Enables directional light scattering"},
+  {n:"LIGHT_SCATTERING_VARIATION",            r:"0–255",      s:[BL],    d:"Scatter spread in 0.1 degree steps", p:1},
+  {n:"LIGHT_CHROMATICABBERATION",             r:"bool",       s:[BL],    d:"Enables chromatic aberration on transmitted light"},
+  {n:"LIGHT_CHROMATICABBERATION_STRENGTH",    r:"0–7",        s:[BL],    d:"0=none, 3=defa ult, 7=full-pixel shift", p:1},
+  {n:"LIGHT_FALLOFF_GLOBAL",                  r:"0–63",       s:[G],     d:"Per-block light falloff via Inverse Square. See falloff table"},
+  {n:"LIGHT_FALLOFF_WORLD",                   r:"0–63",       s:[W],     d:"World-wide light falloff override"},
+  {n:"LIGHT_FLICKER",                         r:"bool",       s:[BL],    d:"Enables light flickering"},
+  {n:"LIGHT_FLICKER_RATE",                    r:"0–63",       s:[BL],    d:"Flicker frequency in 10ms steps", p:1},
+  {n:"LIGHT_FLICKER_RATE_VARIATION",          r:"0–63",       s:[BL],    d:"Frequency jitter in 10ms steps", p:2},
+  {n:"LIGHT_FLICKER_INTENSITY",               r:"0–15",       s:[BL],    d:"Flicker amplitude in light levels", p:1},
+  {n:"LIGHT_FLICKER_INTENSITY_VARIATION",     r:"0–63",       s:[BL],    d:"Intensity jitter in 10ms steps", p:2},
 ]},
 
 /* ─── SURFACE & MATERIAL ─── */
@@ -350,12 +457,12 @@ const SECTIONS = [
 
 /* ─── PUDDLES ─── */
 { id:"puddle", title:"Puddles", vars:[
-  {n:"p_isdirt",                              r:"bool",       s:[L],    d:"Applies a muddy look — increases turbidity and tints puddle brown"},
-  {n:"p_depth",                               r:"0–15",       s:[L],    d:"Puddle depth, affects ripple count and splash scale"},
-  {n:"p_ripple_rate",                         r:"0–15",       s:[L],    d:"Ripple frequency in rain. 0=calm, 15=heavy", isNew:true},
-  {n:"p_ripple_strength",                     r:"0–15",       s:[L],    d:"Ripple distortion amplitude", isNew:true, p:1},
-  {n:"p_reflection_strength",                 r:"0–15",       s:[L],    d:"Mirror reflectivity of puddle surface", isNew:true},
-  {n:"p_evaporation_speed",                   r:"0–15",       s:[L],    d:"How fast puddles shrink after rain stops", isNew:true},
+  {n:"p_isdirt",                              r:"bool",       s:[C],    d:"Applies a muddy look — increases turbidity and tints puddle brown"},
+  {n:"p_depth",                               r:"0–15",       s:[C],    d:"Puddle depth, affects ripple count and splash scale"},
+  {n:"p_ripple_rate",                         r:"0–15",       s:[C],    d:"Ripple frequency in rain. 0=calm, 15=heavy", isNew:true},
+  {n:"p_ripple_strength",                     r:"0–15",       s:[C],    d:"Ripple distortion amplitude", isNew:true, p:1},
+  {n:"p_reflection_strength",                 r:"0–15",       s:[C],    d:"Mirror reflectivity of puddle surface", isNew:true},
+  {n:"p_evaporation_speed",                   r:"0–15",       s:[C],    d:"How fast puddles shrink after rain stops", isNew:true},
 ]},
 
 /* ─── FLUIDS ─── */
@@ -401,7 +508,7 @@ const SECTIONS = [
   {n:"AO_STRENGTH",                           r:"0–15",       s:[G],    d:"Darkening intensity", isNew:true, p:1},
   {n:"AO_QUALITY",                            r:"0–3",        s:[G],    d:"0=low 1=medium 2=high 3=GTAO", isNew:true, p:1},
   {n:"AO_BIAS",                               r:"float",      s:[G],    d:"Depth bias to reduce self-occlusion artifacts", isNew:true, p:1},
-  {n:"AO_BIOME_BLEND",                        r:"0–15",       s:[L],    d:"Per-biome AO strength multiplier", isNew:true},
+  {n:"AO_BIOME_BLEND",                        r:"0–15",       s:[C],    d:"Per-biome AO strength multiplier", isNew:true},
 ]},
 
 /* ─── SKY & ATMOSPHERE ─── */
@@ -534,11 +641,11 @@ const SECTIONS = [
 
 ]; /* END SECTIONS — add new sections above this line */
 
-
+ 
 /* ═══════════════════════════════════════════════════════
    RENDER ENGINE — no need to edit below
 ═══════════════════════════════════════════════════════ */
-
+ 
 const SCOPE_META = {
   world:  { cls:"world",  label:"--world"  },
   local:  { cls:"local",  label:"--local"  },
@@ -546,15 +653,15 @@ const SCOPE_META = {
   biome:  { cls:"biome",  label:"--biome"  },
   block:  { cls:"block",  label:"--block"  },
 };
-const SCOPE_KEY = { world:W, local:L, global:G, biome:B, block:BL };
-
+const SCOPE_KEY = { world:W, local:C, global:G, biome:B, block:BL };
+ 
 let activeFilter = "all";
 let activeSearch = "";
-
+ 
 function totalVars() {
   return SECTIONS.reduce((a, s) => a + s.vars.length, 0);
 }
-
+ 
 function tagHtml(scopes) {
   return scopes.map(s => {
     const key = Object.keys(SCOPE_KEY).find(k => SCOPE_KEY[k] === s) || s;
@@ -562,19 +669,127 @@ function tagHtml(scopes) {
     return `<span class="tag ${meta.cls}">${meta.label}</span>`;
   }).join(" ");
 }
-
+ 
 function rowHtml(v) {
   const depth = v.p ? `d${Math.min(v.p, 3)}` : "";
   const newBadge = v.isNew ? `<span class="badge-new">✦ new</span>` : "";
   const fixNote  = v.fix   ? `<div><span class="badge-fix">⚠ ${v.fix}</span></div>` : "";
-  return `<div class="var-row ${depth} ${v.isNew ? "is-new" : ""}">
-    <div class="var-name">${v.n}${newBadge}</div>
+  const copyBtn  = `<button class="var-copy" onclick="copyVar(event, '${v.n}', '${v.r}')' title="Copy variable">📋</button>`;
+  return `<div class="var-row ${depth} ${v.isNew ? "is-new" : ""}" style="cursor:pointer;" onclick="openModal(event, '${v.n}')">
+    <div class="var-name">${v.n}${newBadge}${copyBtn}</div>
     <div class="var-range">${v.r}</div>
     <div class="var-desc">${v.d}</div>
     <div class="row-meta">${tagHtml(v.s)}${fixNote}</div>
   </div>`;
 }
+ 
+function copyVar(e, name, range) {
+  e.stopPropagation();
+  const text = `${name}=${range}`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = e.target;
+    btn.classList.add("copied");
+    btn.textContent = "✓";
+    setTimeout(() => {
+      btn.classList.remove("copied");
+      btn.textContent = "📋";
+    }, 2000);
+  });
+}
+ 
+function openModal(e, varName) {
+  const allVars = [];
+  SECTIONS.forEach(sec => allVars.push(...sec.vars));
+  const v = allVars.find(x => x.n === varName);
+  if (!v) return;
 
+  document.getElementById("modalVarName").textContent = v.n;
+  document.getElementById("modalVarRange").textContent = v.r;
+  document.getElementById("modalDesc").textContent = v.d;
+  document.getElementById("modalScopeTags").innerHTML = tagHtml(v.s);
+
+  // Find related variables
+  const relatedContainer = document.getElementById("modalRelated");
+  const relatedList = document.getElementById("modalRelatedList");
+  
+  // Match variables from same section or with similar keywords
+  const varPrefix = v.n.split("_")[0]; // e.g., "HAZE" from "HAZE_BASEWORLD"
+  const relatedVars = allVars.filter(rv => 
+    rv.n !== v.n && (
+      rv.n.startsWith(varPrefix) || 
+      rv.d.toLowerCase().includes(v.d.toLowerCase().split(' ').slice(0, 2).join(' '))
+    )
+  ).slice(0, 5);
+
+  if (relatedVars.length > 0) {
+    relatedContainer.style.display = "block";
+    relatedList.innerHTML = relatedVars.map(rv => `
+      <div class="modal-related-item" onclick="openModal(event, '${rv.n}')">
+        <div class="modal-related-name">${rv.n}</div>
+        <div class="modal-related-desc">${rv.d}</div>
+      </div>
+    `).join("");
+  } else {
+    relatedContainer.style.display = "none";
+  }
+
+  // Show referenced variables if available
+  const referencesContainer = document.getElementById("modalReferences");
+  const referencesList = document.getElementById("modalReferencesList");
+  
+  if (v.f && v.f.length > 0) {
+    referencesContainer.style.display = "block";
+    // Parse comma-separated references
+    const refIds = v.f.split(',').map(id => id.trim());
+    const referencedVars = refIds.map(refId => {
+      const refVar = allVars.find(x => x.i === refId);
+      if (!refVar) return null;
+      return {
+        name: refVar.n,
+        range: refVar.r,
+        scope: refVar.s.map(s => {
+          switch(s) {
+            case W: return 'world';
+            case C: return 'custom'; 
+            case G: return 'global';
+            case B: return 'biome';
+            case BL: return 'block';
+            default: return s;
+          }
+        }).join(', '),
+        description: refVar.d,
+        indent: refVar.p || 0,
+        isNew: refVar.isNew || false,
+        id: refVar.i
+      };
+    }).filter(Boolean);
+
+    referencesList.innerHTML = referencedVars.map(ref => `
+      <div class="modal-reference-item">
+        <div class="modal-reference-name">{n:"${ref.name}", r:"${ref.range}", s:[${ref.scope}], d:"${ref.description}", p:${ref.indent}, isNew:${ref.isNew}, i:${ref.id}}</div>
+        <div class="modal-reference-details">
+          <div class="modal-reference-detail"><strong>n:</strong> ${ref.name}</div>
+          <div class="modal-reference-detail"><strong>r:</strong> ${ref.range}</div>
+          <div class="modal-reference-detail"><strong>s:</strong> [${ref.scope}]</div>
+          <div class="modal-reference-detail"><strong>d:</strong> ${ref.description}</div>
+          <div class="modal-reference-detail"><strong>p:</strong> ${ref.indent}</div>
+          ${ref.isNew ? '<div class="modal-reference-detail"><strong>isNew:</strong> true</div>' : ''}
+          <div class="modal-reference-detail"><strong>i:</strong> ${ref.id}</div>
+        </div>
+      </div>
+    `).join("");
+  } else {
+    referencesContainer.style.display = "none";
+    referencesList.innerHTML = '<div class="modal-reference-item"><div class="modal-reference-name">No dependencies</div><div class="modal-reference-details"><div class="modal-reference-detail">This variable has no referenced dependencies</div></div></div>';
+  }
+
+  document.getElementById("modalOverlay").classList.add("open");
+}
+ 
+function closeModal() {
+  document.getElementById("modalOverlay").classList.remove("open");
+}
+ 
 function matches(v) {
   const q = activeSearch.toLowerCase();
   const passSearch = !q || (
@@ -587,13 +802,13 @@ function matches(v) {
   if (activeFilter === "new") return !!v.isNew;
   return v.s.includes(SCOPE_KEY[activeFilter]);
 }
-
+ 
 function render() {
   const container = document.getElementById("sections");
   const statsEl   = document.getElementById("stats-bar");
   let html = "";
   let totalShown = 0;
-
+ 
   SECTIONS.forEach(sec => {
     const visible = sec.vars.filter(matches);
     if (!visible.length) return;
@@ -608,35 +823,46 @@ function render() {
       <div class="sec-body open">${visible.map(rowHtml).join("")}</div>
     </div>`;
   });
-
+ 
   if (!html) html = `<div class="empty">No variables match your search or filters.</div>`;
   container.innerHTML = html;
-
+ 
   const allCount = totalVars();
   statsEl.textContent = activeFilter === "all" && !activeSearch
     ? `${allCount} variables across ${SECTIONS.length} categories`
     : `Showing ${totalShown} of ${allCount} variables`;
 }
-
+ 
 function toggleSec(btn) {
   const open = btn.classList.toggle("open");
   btn.setAttribute("aria-expanded", open);
   btn.nextElementSibling.classList.toggle("open", open);
 }
-
+ 
 function doSearch(v) { activeSearch = v; render(); }
-
+ 
 function setFilter(f, btn) {
   activeFilter = f;
   document.querySelectorAll(".fbtn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
   render();
 }
-
+ 
 // Initial render
 document.getElementById("total-count").textContent =
   `${totalVars()} variables across ${SECTIONS.length} categories`;
 render();
+ 
+// Close modal on overlay click
+document.getElementById("modalOverlay").addEventListener("click", (e) => {
+  if (e.target.id === "modalOverlay") closeModal();
+});
+ 
+// Close modal on Escape key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
 </script>
 </body>
 </html>
+ 
