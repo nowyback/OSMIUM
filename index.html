@@ -23,7 +23,7 @@
  
     /* scope tag colours */
     --c-world-bg:  #E6F1FB; --c-world-tx:  #185FA5;
-    --c-local-bg:  #EAF3DE; --c-local-tx:  #3B6D11;
+    --c-custom-bg:  #EAF3DE; --c-custom-tx:  #3B6D11;
     --c-global-bg: #EEEDFE; --c-global-tx: #534AB7;
     --c-biome-bg:  #FAEEDA; --c-biome-tx:  #854F0B;
     --c-block-bg:  #FAECE7; --c-block-tx:  #993C1D;
@@ -41,7 +41,7 @@
       --border:      rgba(255,255,255,0.08);
       --border2:     rgba(255,255,255,0.15);
       --c-world-bg:  #0C447C; --c-world-tx:  #B5D4F4;
-      --c-local-bg:  #27500A; --c-local-tx:  #C0DD97;
+      --c-custom-bg:  #27500A; --c-custom-tx:  #C0DD97;
       --c-global-bg: #3C3489; --c-global-tx: #CECBF6;
       --c-biome-bg:  #633806; --c-biome-tx:  #FAC775;
       --c-block-bg:  #712B13; --c-block-tx:  #F5C4B3;
@@ -96,7 +96,7 @@
   }
   .fbtn:hover { background: var(--bg3); }
   .fbtn.active { background: var(--c-world-bg); color: var(--c-world-tx); border-color: transparent; }
-  .fbtn.active.f-local  { background: var(--c-local-bg);  color: var(--c-local-tx);  }
+  .fbtn.active.f-custom  { background: var(--c-custom-bg);  color: var(--c-custom-tx);  }
   .fbtn.active.f-global { background: var(--c-global-bg); color: var(--c-global-tx); }
   .fbtn.active.f-biome  { background: var(--c-biome-bg);  color: var(--c-biome-tx);  }
   .fbtn.active.f-block  { background: var(--c-block-bg);  color: var(--c-block-tx);  }
@@ -158,7 +158,7 @@
     border-radius: 20px; font-size: 11px; font-weight: 500; white-space: nowrap;
   }
   .tag.world  { background: var(--c-world-bg);  color: var(--c-world-tx);  }
-  .tag.local  { background: var(--c-local-bg);  color: var(--c-local-tx);  }
+  .tag.custom  { background: var(--c-custom-bg);  color: var(--c-custom-tx);  }
   .tag.global { background: var(--c-global-bg); color: var(--c-global-tx); }
   .tag.biome  { background: var(--c-biome-bg);  color: var(--c-biome-tx);  }
   .tag.block  { background: var(--c-block-bg);  color: var(--c-block-tx);  }
@@ -218,15 +218,6 @@
   .modal-related-item:hover { background: var(--bg3); }
   .modal-related-name { font-family: var(--mono); font-size: 12px; font-weight: 500; margin-bottom: 2px; }
   .modal-related-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
-  .modal-references-list { display: flex; flex-direction: column; gap: 8px; }
-  .modal-reference-item {
-    background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius);
-    padding: 12px; font-family: var(--mono); font-size: 11px; line-height: 1.5;
-  }
-  .modal-reference-name { color: var(--text); font-weight: 600; margin-bottom: 4px; }
-  .modal-reference-details { color: var(--text2); font-size: 10px; }
-  .modal-reference-detail { margin-bottom: 2px; }
-  .modal-reference-detail strong { color: var(--text3); }
  
   /* ── Responsive ── */
   @media (max-width: 500px) {
@@ -255,7 +246,7 @@
   <div class="filter-row" id="filters">
     <button class="fbtn f-all active"   onclick="setFilter('all',this)">All</button>
     <button class="fbtn f-world"  onclick="setFilter('world',this)">--world</button>
-    <button class="fbtn f-local"  onclick="setFilter('custom',this)">--custom</button>
+    <button class="fbtn f-custom"  onclick="setFilter('custom',this)">--custom</button>
     <button class="fbtn f-global" onclick="setFilter('global',this)">--global</button>
     <button class="fbtn f-biome"  onclick="setFilter('biome',this)">--biome</button>
     <button class="fbtn f-block"  onclick="setFilter('block',this)">--block</button>
@@ -265,7 +256,7 @@
  
 <div class="legend">
   <span class="legend-item"><span class="tag world">--world</span> world-level</span>
-  <span class="legend-item"><span class="tag local">--custom</span> custom-level</span>
+  <span class="legend-item"><span class="tag custom">--custom</span> custom-level</span>
   <span class="legend-item"><span class="tag global">--global</span> global / post</span>
   <span class="legend-item"><span class="tag biome">--biome</span> fluid biome</span>
   <span class="legend-item"><span class="tag block">--block</span> per-block</span>
@@ -297,10 +288,6 @@
       <div class="modal-section modal-related" id="modalRelated" style="display:none;">
         <div class="modal-label">Related Variables</div>
         <div class="modal-related-list" id="modalRelatedList"></div>
-      </div>
-      <div class="modal-section" id="modalReferences" style="display:none;">
-        <div class="modal-label">Referenced Variables</div>
-        <div class="modal-references-list" id="modalReferencesList"></div>
       </div>
     </div>
   </div>
@@ -335,12 +322,12 @@ const W="world", C="custom", G="global", B="biome", BL="block";
 
 const SECTIONS = [
 
-/* ─── HAZE ─── */
+/* ─── HAZE ─── [DONE] */
 { id:"haze", title:"Haze", vars:[
-  {n:"HAZE_BASEWORLD",                        r:"bool",       s:[W],    d:"Enables base haze in a world", i:H1},
-  {n:"HAZE_BASEWORLD_DENSITY",                r:"0–255",      s:[W],    d:"Amount of particles per unit", p:1, i:H2, f:H1},
-  {n:"HAZE_BASEWORLD_DENSITY_VARIATION",      r:"0–255",      s:[W],    d:"Range the density can deviate from base", p:2, i:H3, f:H1,H2},
-  {n:"HAZE_BASEWORLD_DENSITY_VARIATION_RANGE",r:"0–255",      s:[W],    d:"Max change per minute", p:3, i:H4, f:H1,H2,H3},
+  {n:"HAZE_BASEWORLD",                        r:"bool",       s:[W],    d:"Enables base haze in a world", id:"H1"},
+  {n:"HAZE_BASEWORLD_DENSITY",                r:"0–255",      s:[W],    d:"Amount of particles per unit", p:1, id:"H2", ref:["H1"]},
+  {n:"HAZE_BASEWORLD_DENSITY_VARIATION",      r:"0–255",      s:[W],    d:"Range the density can deviate from base", p:2, id:"H3", ref:["H1","H2"]},
+  {n:"HAZE_BASEWORLD_DENSITY_VARIATION_RANGE",r:"0–255",      s:[W],    d:"Max change per minute", p:3, id:"H4", ref:["H1","H2","H3"]},
   {n:"HAZE_BASEWORLD_COLOR",                  r:"hex[,hex…]", s:[W],    d:"Haze colour(s). Repeat a hex to increase its probability", p:1},
   {n:"HAZE_BASEWORLD_TYPE",                   r:"0–255",      s:[W],    d:"0=none 1=fog 2=steam 3=smoke 4=dust 5=vapor 6=mist 7=ash 8=haze 9+=custom", p:1},
   {n:"HAZE_BASEWORLD_LIGHT_ABSORPTION",       r:"0–15",       s:[W],    d:"Light absorbed by haze (0=none, 15=all)", p:1},
@@ -400,8 +387,8 @@ const SECTIONS = [
   {n:"HAZE_PARTICLE_TYPE",                    r:"W,B,C",      s:[C],    d:"Which particle type ID to convert", p:2},
 ]},
 
-/* ─── LIGHT EMMISION ─── */
-{ id:"light_emission", title:"Light Emission", vars:[
+/* ─── LIGHT EMMISION [DONE] ─── */
+{ id:"light_emission", title:"Light Emission", isNew:true,  vars:[
   {n:"LIGHT_EMISSION",                        r:"bool",       s:[BL],    d:"Enables light emision", isNew:true},
   {n:"LIGHT_EMISSION_COLOR",                  r:"hex",        s:[BL],    d:"Colour of emitted light", isNew:true},
   {n:"LIGHT_EMISSION_RANGE_OVERRIDE",         r:"0 to 63",    s:[BL],    d:"If set to a value above 0, the light will override the range of the light", p:1, isNew:true},
@@ -416,7 +403,7 @@ const SECTIONS = [
   {n:"LIGHT_ADVANCED_SUBSURFACE_SCATTERING",  r:"bool",       s:[BL],    d:"Enables pixel based SSS for semi translucent blocks", isNew:true},
 ]},
 
-/* ─── LIGHT HANDLING ─── */
+/* ─── LIGHT HANDLING [DONE] ─── */
 { id:"light", title:"Light Handling", vars:[
   {n:"LIGHT_ABSORPTION",                      r:"0–15",       s:[BL],    d:"Reduces light level by this value per reflection. 0=all light gets absorbed, 15=all reflects"},
   {n:"LIGHT_REFLECTIONBLUR",                  r:"0–15",       s:[BL],    d:"Blurriness of reflected light"},
@@ -433,198 +420,128 @@ const SECTIONS = [
   {n:"LIGHT_FLICKER_INTENSITY_VARIATION",     r:"0–63",       s:[BL],    d:"Intensity jitter in 10ms steps", p:2},
 ]},
 
-/* ─── SURFACE & MATERIAL ─── */
-{ id:"surface", title:"Surface & Material (per-block)", isNew:true, vars:[
-  {n:"SURF_ROUGHNESS",                        r:"0–15",       s:[BL],   d:"PBR roughness. 0=mirror 15=fully diffuse", isNew:true},
-  {n:"SURF_METALLIC",                         r:"0–15",       s:[BL],   d:"PBR metallic factor. 0=dielectric 15=conductor", isNew:true},
-  {n:"SURF_REFLECTANCE",                      r:"0–15",       s:[BL],   d:"Base reflectance at normal incidence (F0)", isNew:true},
-  {n:"SURF_EMISSIVE",                         r:"0–15",       s:[BL],   d:"Emissive intensity. Stacks with block light level", isNew:true},
-  {n:"SURF_EMISSIVE_COLOR",                   r:"hex",        s:[BL],   d:"Emissive colour override", isNew:true, p:1},
-  {n:"SURF_NORMAL_STRENGTH",                  r:"0–15",       s:[BL],   d:"Intensity of normal/bump map. 0=flat 15=full depth", isNew:true},
-  {n:"SURF_PARALLAX",                         r:"bool",       s:[BL],   d:"Enables parallax occlusion mapping", isNew:true},
-  {n:"SURF_PARALLAX_DEPTH",                   r:"0–15",       s:[BL],   d:"Depth of parallax displacement in 0.05 block steps", isNew:true, p:1},
-  {n:"SURF_PARALLAX_STEPS",                   r:"1–64",       s:[BL],   d:"Ray march steps — higher = more accurate but slower", isNew:true, p:1},
-  {n:"SURF_DISPLACEMENT",                     r:"bool",       s:[BL],   d:"Enables geometric vertex displacement", isNew:true},
-  {n:"SURF_DISPLACEMENT_SCALE",               r:"0–15",       s:[BL],   d:"Displacement height in 0.05 block steps", isNew:true, p:1},
-  {n:"SURF_AO_STRENGTH",                      r:"0–15",       s:[BL],   d:"Per-block ambient occlusion intensity override", isNew:true},
-  {n:"SURF_TRANSLUCENCY",                     r:"0–15",       s:[BL],   d:"Amount of light transmitted through thin geometry", isNew:true},
-  {n:"SURF_WAVING",                           r:"bool",       s:[BL],   d:"Enables vertex waving (leaves, grass, banners)", isNew:true},
-  {n:"SURF_WAVING_AMPLITUDE",                 r:"0–15",       s:[BL],   d:"Wave height in 0.05 block steps", isNew:true, p:1},
-  {n:"SURF_WAVING_SPEED",                     r:"0–15",       s:[BL],   d:"Wave frequency multiplier", isNew:true, p:1},
-  {n:"SURF_WAVING_WIND_INFLUENCE",            r:"0–15",       s:[BL],   d:"How much HAZE_*_WIND_* values affect waving direction", isNew:true, p:1},
-  {n:"SURF_CUSTOM_SHADER",                    r:"string",     s:[BL],   d:"Path to a GLSL snippet injected into the surface shader for this block type", isNew:true},
-]},
-
-/* ─── PUDDLES ─── */
+/* ─── PUDDLES ─── [DONE] */
 { id:"puddle", title:"Puddles", vars:[
-  {n:"p_isdirt",                              r:"bool",       s:[C],    d:"Applies a muddy look — increases turbidity and tints puddle brown"},
-  {n:"p_depth",                               r:"0–15",       s:[C],    d:"Puddle depth, affects ripple count and splash scale"},
-  {n:"p_ripple_rate",                         r:"0–15",       s:[C],    d:"Ripple frequency in rain. 0=calm, 15=heavy", isNew:true},
-  {n:"p_ripple_strength",                     r:"0–15",       s:[C],    d:"Ripple distortion amplitude", isNew:true, p:1},
-  {n:"p_reflection_strength",                 r:"0–15",       s:[C],    d:"Mirror reflectivity of puddle surface", isNew:true},
-  {n:"p_evaporation_speed",                   r:"0–15",       s:[C],    d:"How fast puddles shrink after rain stops", isNew:true},
+  {n:"PUDDLE_COLOR",                          r:"hex",        s:[B],    d:"Color of the puddle"},
+  {n:"PUDDLE_DEPTH",                          r:"0–15",       s:[B],    d:"Puddle depth, affects ripple count, time to evaporate and splash scale"},
+  {n:"PUDDLE_VISCOSITY",                      r:"0–15",       s:[B],    d:"Ripple distortion amplitude", isNew:true, p:1},
+  {n:"PUDDLE_REFLECTION_STRENGHT",            r:"0–15",       s:[B],    d:"Mirror reflectivity of puddle surface", isNew:true},
+  {n:"PUDDLE_EVAPORATION_SPEED",              r:"0–15",       s:[B],    d:"How fast puddles shrink after rain stops", isNew:true},
 ]},
 
-/* ─── FLUIDS ─── */
+/* ─── FLUIDS ─── [DONE] */
 { id:"fluid", title:"Fluids", vars:[
-  {n:"f_visibility",                          r:"0–255",      s:[B],    d:"Horizontal view distance through fluid in blocks"},
-  {n:"f_falloff",                             r:"0–63",       s:[B],    d:"Light falloff inside fluid (see falloff table)"},
-  {n:"f_murkiness",                           r:"0–255",      s:[B],    d:"Particle density in cubic units"},
-  {n:"fm_lightscattering",                    r:"0–255",      s:[B],    d:"Light scatter inside fluid in 0.1 degree steps", p:1},
-  {n:"fm_lightabsorbtion",                    r:"0–15",       s:[B],    d:"Light absorbed by murkiness", p:1},
-  {n:"fm_color",                              r:"hex / null", s:[B],    d:"Fluid colour override. null = default", p:1},
-  {n:"f_refractionindex",                     r:"0–15",       s:[B],    d:"View bend when looking into fluid"},
-  {n:"f_wave_height",                         r:"0–15",       s:[B],    d:"Wave height in 0.05 block steps"},
-  {n:"f_wave_speed",                          r:"0–15",       s:[B],    d:"Wave speed in 0.25 blocks/sec"},
-  {n:"f_viscosity",                           r:"0–15",       s:[B],    d:"Fluid viscosity — affects player physics and wave damping"},
-  {n:"f_foam_threshold",                      r:"0–15",       s:[B],    d:"Wave height at which foam/whitecap appears", isNew:true},
-  {n:"f_foam_color",                          r:"hex",        s:[B],    d:"Foam colour", isNew:true, p:1},
-  {n:"f_caustics_strength",                   r:"0–15",       s:[B],    d:"Intensity of caustic light patterns on underwater surfaces", isNew:true},
-  {n:"f_caustics_scale",                      r:"0–15",       s:[B],    d:"Scale of caustic pattern in 0.1 block steps", isNew:true, p:1},
-  {n:"f_depth_color",                         r:"hex",        s:[B],    d:"Colour at maximum depth (for depth-based tinting)", isNew:true},
-  {n:"f_depth_falloff",                       r:"0–15",       s:[B],    d:"Depth over which colour blends to f_depth_color", isNew:true, p:1},
-  {n:"f_bioluminescence",                     r:"bool",       s:[B],    d:"Enables glowing particles in fluid", isNew:true},
-  {n:"f_bioluminescence_color",               r:"hex",        s:[B],    d:"Particle glow colour", isNew:true, p:1},
-  {n:"f_bioluminescence_density",             r:"0–255",      s:[B],    d:"Glowing particle count", isNew:true, p:1},
-  {n:"f_custom_shader",                       r:"string",     s:[B],    d:"Path to GLSL snippet injected into the fluid surface shader", isNew:true},
+  {n:"FLUID_VISIBILITY",                      r:"0–255",      s:[C],    d:"Visibility distance through fluid in blocks"},
+  {n:"FLUID_LIGHT_FALLOFF",                   r:"0–63",       s:[C],    d:"Light falloff inside fluid (see falloff table)"},
+  {n:"FLUID_MURKINESS",                       r:"0–255",      s:[C],    d:"Particle density in cubic units"},
+  {n:"FLUID_LIGHT_SCATTERING",                r:"0–255",      s:[C],    d:"Light scatter inside fluid in 0.1 degree steps", p:1},
+  {n:"FLUID_LIGHT_ABSORPTION",                r:"0–15",       s:[C],    d:"Light absorbed by murkiness", p:1},
+  {n:"FLUID_COLOR",                           r:"hex / null", s:[C],    d:"Fluid colour override. null = default", p:1},
+  {n:"FLUID_WAVE_HEIGHT",                     r:"0–15",       s:[C],    d:"Wave height in 0.05 block steps"},
+  {n:"FLUID_WAVE_SPEED",                      r:"0–15",       s:[C],    d:"Wave speed in 0.25 blocks/sec"},
+  {n:"FLUID_VISCOSITY",                       r:"0–15",       s:[C],    d:"Fluid viscosity — affects player physics and wave damping"},
+  {n:"FLUID_FOAM",                            r:"bool",       s:[C],    d:"Enables foam", isNew:true},
+  {n:"FLUID_FOAM_SHORE",                      r:"bool",       s:[C],    d:"Enable foam at shallow water edges", isNew:true, p:1},
+  {n:"FLUID_FOAM_THRESHOLD",                  r:"0–15",       s:[C],    d:"Wave height at which foam/whitecap appears", isNew:true, p:1},
+  {n:"FLUID_FOAM_COLOR",                      r:"hex",        s:[C],    d:"Foam colour", isNew:true, p:1},
+  {n:"FLUID_CAUSTICS",                        r:"bool",       s:[C],    d:"Enables caustic light patterns on underwater surfaces", isNew:true},
+  {n:"FLUID_CAUSTICS_STRENGTH",               r:"0–15",       s:[C],    d:"Intensity of caustic light patterns on underwater surfaces", isNew:true, p:1},
+  {n:"FLUID_CAUSTICS_SCALE",                  r:"0–15",       s:[C],    d:"Scale of caustic pattern in 0.1 block steps", isNew:true, p:1},
+  {n:"FLUID_DEPTH_COLOR",                     r:"hex",        s:[C],    d:"Colour at maximum depth (for depth-based tinting)", isNew:true},
+  {n:"FLUID_DEPTH_FALLOFF",                   r:"0–15",       s:[C],    d:"Depth over which colour blends to f_depth_color", isNew:true, p:1},
+  {n:"FLUID_BIOLUMINESCENCE",                 r:"bool",       s:[C],    d:"Enables glowing particles in fluid", isNew:true},
+  {n:"FLUID_BIOLUMINESCENCE_COLOR",           r:"hex",        s:[C],    d:"Particle glow colour", isNew:true, p:1},
+  {n:"FLUID_BIOLUMINESCENCE_DENSITY",         r:"0–255",      s:[C],    d:"Glowing particle count", isNew:true, p:1},
 ]},
 
-/* ─── GLOBAL ILLUMINATION ─── */
+/* ─── GLOBAL ILLUMINATION [DONE] ─── */
 { id:"gi", title:"Global Illumination", vars:[
-  {n:"g_world",                               r:"0–15",       s:[G],    d:"GI influence on the world. 0=off, 15=max"},
-  {n:"g_biome",                               r:"0–15",       s:[G],    d:"GI influence per biome"},
-  {n:"g_color",                               r:"0–15",       s:[G],    d:"0=default overworld colour, 1–15=custom"},
-  {n:"g_bounce_count",                        r:"1–8",        s:[G],    d:"Number of indirect light bounces. Higher = softer, slower", isNew:true},
-  {n:"g_sky_contribution",                    r:"0–15",       s:[G],    d:"How strongly sky colour bleeds into shadowed areas", isNew:true},
-  {n:"g_emissive_contribution",               r:"0–15",       s:[G],    d:"How much emissive blocks contribute to GI", isNew:true},
-  {n:"g_resolution",                          r:"0–3",        s:[G],    d:"0=low (fast) 1=medium 2=high 3=per-texel (expensive)", isNew:true},
-  {n:"g_temporal_blend",                      r:"0–15",       s:[G],    d:"Temporal accumulation frames — reduces noise, increases ghosting", isNew:true},
+  {n:"GLOBAL_ILLUMINATION_WORLD",             r:"0–15",       s:[W],    d:"GI influence on the world. 0=off, 15=max"},
+  {n:"GLOBAL_ILLUMINATION_BIOME",             r:"0–15",       s:[B],    d:"GI influence per biome"},
+  {n:"GLOBAL_ILLUMINATION_COLOR",             r:"0–15",       s:[C],    d:"0=default overworld colour, 1–15=custom"},
+  {n:"GLOBAL_ILLUMINATION_SKY_CONTRIBUTION",  r:"0–15",       s:[C],    d:"How strongly sky colour bleeds into shadowed areas", isNew:true},
+  {n:"GLOBAL_ILLUMINATION_EMISSIVE_CONTRIBUTION", r:"0–15",   s:[C],    d:"How much emissive blocks contribute to GI", isNew:true},
 ]},
 
-/* ─── AMBIENT OCCLUSION ─── */
-{ id:"ao", title:"Ambient Occlusion", isNew:true, vars:[
-  {n:"AO_ENABLED",                            r:"bool",       s:[G],    d:"Enable screen-space ambient occlusion (SSAO)", isNew:true},
-  {n:"AO_RADIUS",                             r:"0–15",       s:[G],    d:"Sample radius in blocks", isNew:true, p:1},
-  {n:"AO_STRENGTH",                           r:"0–15",       s:[G],    d:"Darkening intensity", isNew:true, p:1},
-  {n:"AO_QUALITY",                            r:"0–3",        s:[G],    d:"0=low 1=medium 2=high 3=GTAO", isNew:true, p:1},
-  {n:"AO_BIAS",                               r:"float",      s:[G],    d:"Depth bias to reduce self-occlusion artifacts", isNew:true, p:1},
-  {n:"AO_BIOME_BLEND",                        r:"0–15",       s:[C],    d:"Per-biome AO strength multiplier", isNew:true},
+/* ─── BLOCK PROPERTIES ─── */
+{ id:"block", title:"Block Properties", isNew:true, vars:[
+  {n:"BLOCK_PERMABLE",                        r:"bool",       s:[BL],   d:"Enables the fluids to drip through a block", isNew:true},
+  {n:"BLOCK_PERMABLE_TIME",                   r:"0-255",      s:[BL],   d:"How long it takes for the fluids to reach the bottom, affected by WATER_VISCOSITY", isNew:true},
+  {n:"BLOCK_PERMABLE_REDUCTION",              r:"0-255",      s:[BL],   d:"How much fluids gets absorbed by the block", isNew:true},
+  {n:"BLOCK_PERMABLE_REDICTION_MAX",          r:"0-255",      s:[BL],   d:"Whats the max ammount the block can take before not absorbing any more fluids", isNew:true},
+  {n:"BLOCK_PERMABLE_DRY_TIME",               r:"0-255",      s:[BL],   d:"How long the block takes to dry up", isNew:true},
+  {n:"BLOCK_PERMABLE_ADAPTATION",             r:"0-63",       s:[BL],   d:"How the fluid adapts to the block it went through", isNew:true},
+  {n:"BLOCK_ADAPTATION",                      r:"0-63",       s:[BL],   d:"If the block adapts to certian events", isNew:true},
+  {n:"BLOCK_ADAPTATION_WATER",                r:"0-63",       s:[BL],   d:"If the block adapts to water", isNew:true},
+  {n:"BLOCK_ADAPTATION_LAVA",                 r:"0-63",       s:[BL],   d:"If the block adapts to lava", isNew:true},
+  {n:"BLOCK_ADAPTATION_CUSTOM",               r:"0-63",       s:[BL],   d:"If the block adapts to custom fluids", isNew:true},
+  {n:"BLOCK_ADAPTATION_RAIN",                 r:"0-63",       s:[BL],   d:"If the block adapts to rain", isNew:true},
+  {n:"BLOCK_PARTICLE_EMISSION",               r:"bool",       s:[BL],   d:"If the block emits particles", isNew:true},
+  {n:"BLOCK_PARTICLE_EMSION_AMOUNT",          r:"0-255",      s:[BL],   d:"How many particles the block emits", isNew:true},
+  {n:"BLOCK_PARTICLE_EMSION_RADIUS",          r:"0-63",       s:[BL],   d:"How far the particles can go", isNew:true},
+  {n:"BLOCK_WAVING",                          r:"bool",       s:[BL],   d:"Enables vertex waving (leaves, grass, banners)", isNew:true},
+  {n:"BLOCK_WAVING_AMPLITUDE",                r:"0–15",       s:[BL],   d:"Wave height in 0.05 block steps", isNew:true, p:1},
+  {n:"BLOCK_WAVING_SPEED",                    r:"0–15",       s:[BL],   d:"Wave frequency multiplier", isNew:true, p:1},
+  {n:"BLOCK_WAVING_WIND_INFLUENCE",           r:"0–15",       s:[BL],   d:"How much HAZE_*_WIND_* values affect waving direction", isNew:true, p:1},
 ]},
 
-/* ─── SKY & ATMOSPHERE ─── */
+/* ─── SKY & ATMOSPHERE ─── [DONE] */
 { id:"sky", title:"Sky & Atmosphere", vars:[
-  {n:"STAR_TYPE",                             r:"integer",    s:[G],    d:"Star rendering style index"},
-  {n:"SKY_TEXTURE_BRIGHTNESS",                r:"float",      s:[G],    d:"Sky texture brightness multiplier"},
-  {n:"SKY_MODEL",                             r:"0–3",        s:[G],    d:"0=simple gradient 1=Rayleigh 2=Mie 3=Preetham", isNew:true},
-  {n:"SKY_RAYLEIGH_STRENGTH",                 r:"0–15",       s:[G],    d:"Rayleigh scattering intensity — controls sky blueness", isNew:true, p:1},
-  {n:"SKY_MIE_STRENGTH",                      r:"0–15",       s:[G],    d:"Mie scattering — controls haze around sun", isNew:true, p:1},
-  {n:"SKY_OZONE_STRENGTH",                    r:"0–15",       s:[G],    d:"Ozone absorption — warms sunsets", isNew:true, p:1},
-  {n:"SUN_ANGULAR_SIZE",                      r:"float",      s:[G],    d:"Sun disc diameter in degrees (0.5 = real-world)", isNew:true},
-  {n:"SUN_COLOR",                             r:"hex",        s:[G],    d:"Sun disc colour override", isNew:true, p:1},
-  {n:"SUN_CORONA_RADIUS",                     r:"0–15",       s:[G],    d:"Glow radius around sun disc in degrees", isNew:true, p:1},
-  {n:"MOON_ANGULAR_SIZE",                     r:"float",      s:[G],    d:"Moon disc size in degrees", isNew:true},
-  {n:"MOON_PHASE_AFFECTS_LIGHT",              r:"bool",       s:[G],    d:"Moonlight intensity scales with phase", isNew:true, p:1},
-  {n:"SKY_CUSTOM_LUT",                        r:"string",     s:[G],    d:"Path to a 3D LUT texture for sky colour grading", isNew:true},
+  {n:"STAR_TYPE",                             r:"integer",    s:[W],    d:"Star rendering style index"},
+  {n:"SKY_TEXTURE_BRIGHTNESS",                r:"float",      s:[W],    d:"Sky texture brightness multiplier"},
+  {n:"SKY_MODEL",                             r:"0–3",        s:[W],    d:"0=simple gradient 1=Rayleigh 2=Mie 3=Preetham", isNew:true},
+  {n:"SKY_RAYLEIGH_STRENGTH",                 r:"0–15",       s:[W],    d:"Rayleigh scattering intensity — controls sky blueness", isNew:true, p:1},
+  {n:"SKY_MIE_STRENGTH",                      r:"0–15",       s:[W],    d:"Mie scattering — controls haze around sun", isNew:true, p:1},
+  {n:"SKY_OZONE_STRENGTH",                    r:"0–15",       s:[W],    d:"Ozone absorption — warms sunsets", isNew:true, p:1},
+  {n:"SUN_ANGULAR_SIZE",                      r:"float",      s:[W],    d:"Sun disc diameter in degrees (0.5 = real-world)", isNew:true},
+  {n:"SUN_COLOR",                             r:"hex",        s:[W],    d:"Sun disc colour override", isNew:true, p:1},
+  {n:"SUN_CORONA_RADIUS",                     r:"0–15",       s:[W],    d:"Glow radius around sun disc in degrees", isNew:true, p:1},
+  {n:"MOON_ANGULAR_SIZE",                     r:"float",      s:[W],    d:"Moon disc size in degrees", isNew:true},
+  {n:"MOON_PHASE_AFFECTS_LIGHT",              r:"bool",       s:[W],    d:"Moonlight intensity scales with phase", isNew:true, p:1},
+  {n:"SKY_CUSTOM_LUT",                        r:"string",     s:[W],    d:"Path to a 3D LUT texture for sky colour grading", isNew:true},
 ]},
 
-/* ─── COLOUR GRADING ─── */
-{ id:"color", title:"Colour Grading", isNew:true, vars:[
-  {n:"CC_EXPOSURE",                           r:"float",      s:[G],    d:"EV exposure offset. 0=neutral", isNew:true},
-  {n:"CC_CONTRAST",                           r:"float",      s:[G],    d:"Contrast multiplier. 1.0=neutral", isNew:true},
-  {n:"CC_SATURATION",                         r:"float",      s:[G],    d:"Colour saturation. 1.0=neutral, 0=greyscale", isNew:true},
-  {n:"CC_TEMPERATURE",                        r:"-15–15",     s:[G],    d:"Colour temperature shift. Negative=cool, positive=warm", isNew:true},
-  {n:"CC_TINT",                               r:"-15–15",     s:[G],    d:"Green–magenta tint shift", isNew:true},
-  {n:"CC_SHADOWS_COLOR",                      r:"hex",        s:[G],    d:"Colour cast applied to shadow tones", isNew:true},
-  {n:"CC_MIDTONES_COLOR",                     r:"hex",        s:[G],    d:"Colour cast applied to midtones", isNew:true},
-  {n:"CC_HIGHLIGHTS_COLOR",                   r:"hex",        s:[G],    d:"Colour cast applied to highlights", isNew:true},
-  {n:"CC_SHADOWS_LIFT",                       r:"float",      s:[G],    d:"Shadow lift (raises blacks). 0=neutral", isNew:true},
-  {n:"CC_HIGHLIGHTS_GAIN",                    r:"float",      s:[G],    d:"Highlight roll-off. 1.0=neutral", isNew:true},
-  {n:"CC_TONEMAP",                            r:"0–5",        s:[G],    d:"0=linear 1=Reinhard 2=ACES 3=Filmic 4=AgX 5=custom", isNew:true},
-  {n:"CC_LUT",                                r:"string",     s:[G],    d:"Path to a 3D LUT texture applied as final colour grade", isNew:true},
-  {n:"CC_BIOME_EXPOSURE",                     r:"float",      s:[L],    d:"Per-biome exposure offset, stacks with CC_EXPOSURE", isNew:true},
-  {n:"CC_BIOME_SATURATION",                   r:"float",      s:[L],    d:"Per-biome saturation override", isNew:true},
-  {n:"CC_BIOME_TEMPERATURE",                  r:"-15–15",     s:[L],    d:"Per-biome colour temperature", isNew:true},
-]},
-
-/* ─── POST-PROCESSING ─── */
-{ id:"post", title:"Post-Processing", isNew:true, vars:[
-  {n:"PP_BLOOM",                              r:"bool",       s:[G],    d:"Enable bloom / glow on bright pixels", isNew:true},
-  {n:"PP_BLOOM_THRESHOLD",                    r:"float",      s:[G],    d:"Luminance threshold above which bloom kicks in", isNew:true, p:1},
-  {n:"PP_BLOOM_INTENSITY",                    r:"0–15",       s:[G],    d:"Bloom brightness", isNew:true, p:1},
-  {n:"PP_BLOOM_RADIUS",                       r:"0–15",       s:[G],    d:"Bloom spread in pixels", isNew:true, p:1},
-  {n:"PP_DOF",                                r:"bool",       s:[G],    d:"Enable depth of field", isNew:true},
-  {n:"PP_DOF_FOCAL_DISTANCE",                 r:"float",      s:[G],    d:"Focal plane distance in blocks", isNew:true, p:1},
-  {n:"PP_DOF_FOCAL_RANGE",                    r:"float",      s:[G],    d:"Sharp zone depth in blocks", isNew:true, p:1},
-  {n:"PP_DOF_BLUR_RADIUS",                    r:"0–15",       s:[G],    d:"Max circle of confusion radius in pixels", isNew:true, p:1},
-  {n:"PP_DOF_BOKEH_SHAPE",                    r:"0–5",        s:[G],    d:"0=circle 1=hex 2=octagon 3=anamorphic 4=star 5=custom", isNew:true, p:1},
-  {n:"PP_MOTIONBLUR",                         r:"bool",       s:[G],    d:"Enable camera motion blur", isNew:true},
-  {n:"PP_MOTIONBLUR_STRENGTH",                r:"0–15",       s:[G],    d:"Shutter angle equivalent", isNew:true, p:1},
-  {n:"PP_VIGNETTE",                           r:"bool",       s:[G],    d:"Enable vignette darkening at screen edges", isNew:true},
-  {n:"PP_VIGNETTE_STRENGTH",                  r:"0–15",       s:[G],    d:"Vignette intensity", isNew:true, p:1},
-  {n:"PP_VIGNETTE_RADIUS",                    r:"float",      s:[G],    d:"Radial extent. 1.0=touches corners", isNew:true, p:1},
-  {n:"PP_FILM_GRAIN",                         r:"bool",       s:[G],    d:"Add analogue film grain noise", isNew:true},
-  {n:"PP_FILM_GRAIN_STRENGTH",                r:"0–15",       s:[G],    d:"Grain intensity", isNew:true, p:1},
-  {n:"PP_LENS_FLARE",                         r:"bool",       s:[G],    d:"Enable lens flare from bright light sources", isNew:true},
-  {n:"PP_LENS_FLARE_INTENSITY",               r:"0–15",       s:[G],    d:"Flare brightness", isNew:true, p:1},
-  {n:"PP_LENS_DISTORTION",                    r:"-15–15",     s:[G],    d:"Barrel (positive) or pincushion (negative) lens distortion", isNew:true},
-  {n:"PP_SHARPEN",                            r:"0–15",       s:[G],    d:"Post-AA sharpening (CAS-style). 0=off", isNew:true},
-  {n:"PP_CUSTOM_PASS",                        r:"string",     s:[G],    d:"Path to a GLSL file for a full custom post-processing pass", isNew:true},
-]},
-
-/* ─── TEMPORAL & AA ─── */
-{ id:"temporal", title:"Temporal & Anti-Aliasing", isNew:true, vars:[
-  {n:"TAA_ENABLED",                           r:"bool",       s:[G],    d:"Enable temporal anti-aliasing", isNew:true},
-  {n:"TAA_FEEDBACK",                          r:"float",      s:[G],    d:"History blend factor. Higher=more stable but more ghosting", isNew:true, p:1},
-  {n:"TAA_JITTER_SCALE",                      r:"float",      s:[G],    d:"Sub-pixel jitter spread", isNew:true, p:1},
-  {n:"TAA_SHARPEN",                           r:"0–15",       s:[G],    d:"Temporal sharpening to counteract TAA blur", isNew:true, p:1},
-  {n:"TAA_GHOST_REJECTION",                   r:"0–15",       s:[G],    d:"Aggressiveness of history rejection on disocclusions", isNew:true, p:1},
-  {n:"AA_MODE",                               r:"0–4",        s:[G],    d:"0=none 1=FXAA 2=SMAA 3=TAA 4=DLSS/XeSS (if supported)", isNew:true},
-]},
-
-/* ─── WEATHER ─── */
+/* ─── WEATHER ─── [DONE] */
 { id:"weather", title:"Weather", vars:[
-  {n:"w_weather",                             r:"bool",       s:[W],    d:"Master weather toggle"},
-  {n:"w_rain",                                r:"bool",       s:[W],    d:"Enable rain", p:1},
-  {n:"w_rain_density",                        r:"0–255",      s:[W],    d:"Rain droplet density", p:2},
-  {n:"w_rain_speed",                          r:"0–15",       s:[W],    d:"Droplet fall speed", p:2},
-  {n:"w_thunder",                             r:"bool",       s:[W],    d:"Enable thunder", p:1},
-  {n:"w_thunder_frequency",                   r:"0–255",      s:[W],    d:"Lightning strike frequency", p:2},
-  {n:"w_snow",                                r:"bool",       s:[W],    d:"Enable snowfall", isNew:true, p:1},
-  {n:"w_snow_density",                        r:"0–255",      s:[W],    d:"Snowflake density", isNew:true, p:2},
-  {n:"w_snow_size",                           r:"0–15",       s:[W],    d:"Flake scale in pixels", isNew:true, p:2},
-  {n:"w_snow_accumulation",                   r:"bool",       s:[W],    d:"Allow snow to pile up on surfaces over time", isNew:true, p:2},
-  {n:"w_wind_global",                         r:"0–255",      s:[W],    d:"Global wind speed — affects rain angle, haze, and waving", isNew:true},
-  {n:"w_wind_gust_intensity",                 r:"0–15",       s:[W],    d:"Gust strength (random speed spikes)", isNew:true, p:1},
-  {n:"w_wind_gust_frequency",                 r:"0–255",      s:[W],    d:"How often gusts occur in seconds", isNew:true, p:1},
-  {n:"w_fog_override",                        r:"bool",       s:[W],    d:"Force fog regardless of HAZE settings during weather", isNew:true},
-  {n:"w_fog_density",                         r:"0–255",      s:[W],    d:"Weather fog density", isNew:true, p:1},
-  {n:"w_lightning_color",                     r:"hex",        s:[W],    d:"Lightning bolt and flash colour", isNew:true, p:1},
-  {n:"w_wetness_rampup",                      r:"0–255",      s:[W],    d:"Seconds for surfaces to reach full wetness after rain starts", isNew:true},
-  {n:"w_wetness_rampdown",                    r:"0–255",      s:[W],    d:"Seconds for surfaces to dry after rain stops", isNew:true},
+  {n:"WEATHER_RAIN_DENSITY",                  r:"0–255",      s:[B],    d:"Rain droplet density", p:2},
+  {n:"WEATHER_RAIN_SPEED",                    r:"0–15",       s:[B],    d:"Droplet fall speed", p:2},
+  {n:"WEATHER_SNOW_DENSITY",                  r:"0–255",      s:[B],    d:"Snowflake density", isNew:true, p:2},
+  {n:"WEATHER_SNOW_SIZE",                     r:"0–15",       s:[B],    d:"Flake scale in pixels", isNew:true, p:2},
+  {n:"WEATHER_SNOW_ACCUMULATION",             r:"bool",       s:[B],    d:"Allow snow to pile up on surfaces over time", isNew:true, p:2},
+  {n:"WEATHER_WIND",                          r:"bool",       s:[B],    d:"Enables wind interaction", isNew:true},
+  {n:"WEATHER_WIND_DIRECTION",                r:"0-360",      s:[B],    d:"Gust origin in degrees", isNew:true, p:1},
+  {n:"WEATHER_WIND_SPEED",                    r:"0-255",      s:[B],    d:"Speed of normal wind", isNew:true, p:1},
+  {n:"WEATHER_WIND_GUSTS",                    r:"bool",       s:[B],    d:"If gusts appear over time", isNew:true, p:1},
+  {n:"WEATHER_WIND_GUSTS_INTENSITY",          r:"0–255",      s:[B],    d:"How much faster the wind is", isNew:true, p:2},
+  {n:"WEATHER_WIND_GUSTS_INTENSITY_VARIATION", r:"0–255",     s:[B],   d:"Variation of the gusts", isNew:true, p:2},
+  {n:"WEATHER_WIND_GUSTS_CHANCE",             r:"0–255",      s:[B],    d:"How often gusts times occur in minutes", isNew:true, p:2},
+  {n:"WEATHER_WIND_GUSTS_DURATION",           r:"0–255",      s:[B],    d:"How long gust times appear in 10s", isNew:true, p:2},
+  {n:"WEATHER_FOG OVERRIDE",                  r:"bool",       s:[B],    d:"Force fog regardless of HAZE settings during weather", isNew:true},
+  {n:"WEATHER_FOG_DENSITY",                   r:"0–255",      s:[B],    d:"Weather fog density", isNew:true, p:1},
+  {n:"WEATHER_LIGHTNING_COLOR",               r:"hex",        s:[B],    d:"Lightning bolt and flash colour", isNew:true, p:1},
+  {n:"WEATHER_LIGHTNING_BRIGHTNESS",          r:"0-15",       s:[B],   d:"Increases the brightness and range of the lightning. when set to 15 reaches to 45 blocks"},
+  {n:"WEATHER_WETNESS_RAMPUP",                r:"0–255",      s:[B],   d:"Seconds for surfaces to reach full wetness after rain starts", isNew:true},
+  {n:"WEATHER_WETNESS_RAMPDOWN",              r:"0–255",      s:[B],   d:"Seconds for surfaces to dry after rain stops", isNew:true},
 ]},
 
-/* ─── SHADOWS ─── */
+/* ─── SHADOWS ─── [DONE] */
 { id:"shadow", title:"Shadows", vars:[
-  {n:"SHADOW_MAP_BIAS",                       r:"float",      s:[G],    d:"Depth bias to prevent shadow acne"},
-  {n:"SHADOW_BASIC_BLUR",                     r:"float",      s:[G],    d:"PCF blur radius for soft shadows"},
-  {n:"SHADOW_DISTANCE",                       r:"0–255",      s:[G],    d:"Maximum shadow draw distance in blocks", isNew:true},
-  {n:"SHADOW_CASCADES",                       r:"1–4",        s:[G],    d:"Number of CSM cascades (higher=better far-shadow quality)", isNew:true},
-  {n:"SHADOW_PENUMBRA",                       r:"bool",       s:[G],    d:"Enable PCSS variable-width penumbra (sun size dependent)", isNew:true},
-  {n:"SHADOW_PENUMBRA_SAMPLES",               r:"4–64",       s:[G],    d:"PCSS sample count — higher=softer but slower", isNew:true, p:1},
-  {n:"SHADOW_COLORED_TRANSMISSION",           r:"bool",       s:[G],    d:"Transparent blocks cast coloured shadows", isNew:true},
-  {n:"SHADOW_BIOME_TINT",                     r:"hex",        s:[L],    d:"Colour-tints shadows inside this biome (useful for nether/end)", isNew:true},
+  {n:"SHADOW_CASCADES",                       r:"1–4",        s:[W],    d:"Number of CSM cascades (higher=better far-shadow quality)", isNew:true},
+  {n:"SHADOW_PENUMBRA",                       r:"bool",       s:[W],    d:"Enable PCSS variable-width penumbra (sun size dependent)", isNew:true},
+  {n:"SHADOW_PENUMBRA_SAMPLES",               r:"4–64",       s:[W],    d:"PCSS sample count — higher=softer but slower", isNew:true, p:1},
+  {n:"SHADOW_COLORED_TRANSMISSION",           r:"bool",       s:[W],    d:"Transparent blocks cast coloured shadows", isNew:true},
+  {n:"SHADOW_BIOME_TINT",                     r:"hex",        s:[B],    d:"Colour-tints shadows inside this biome (useful for nether/end)", isNew:true},
 ]},
 
-/* ─── BIOME TRANSITIONS ─── */
+/* ─── BIOME TRANSITIONS ─── [DONE] */
 { id:"biome_transition", title:"Biome Transitions", isNew:true, vars:[
-  {n:"BIOME_BLEND_RADIUS",                    r:"0–255",      s:[L],    d:"Block radius over which this biome's atmosphere blends into adjacent biomes", isNew:true},
-  {n:"BIOME_BLEND_PRIORITY",                  r:"0–15",       s:[L],    d:"Which biome wins when two high-priority biomes meet", isNew:true, p:1},
-  {n:"BIOME_BLEND_CURVE",                     r:"0–3",        s:[L],    d:"0=linear 1=smooth 2=step 3=custom curve", isNew:true, p:1},
-  {n:"BIOME_SURFACE_WETNESS",                 r:"0–15",       s:[L],    d:"How wet surfaces appear in this biome (affects roughness and reflections)", isNew:true},
-  {n:"BIOME_AMBIENT_SOUND_REVERB",            r:"0–15",       s:[L],    d:"Reverb level for in-biome audio (ties into reverb zones for shader fog sync)", isNew:true},
+  {n:"BIOME_BLEND_RADIUS",                    r:"0–255",      s:[B],    d:"Block radius over which this biome's atmosphere blends into adjacent biomes", isNew:true},
+  {n:"BIOME_BLEND_PRIORITY",                  r:"0–15",       s:[B],    d:"Which biome wins when two high-priority biomes meet", isNew:true},
+  {n:"BIOME_BLEND_PRIORITY_VALUE",            r:"0-255",      s:[B],    d:"Z-order when multiple biomes layers overlap. Higher Value = Higher Priority", isNew:true}, 
+  {n:"BIOME_BLEND_CURVE",                     r:"0–3",        s:[B],    d:"0=linear 1=smooth 2=step 3=custom curve", isNew:true, p:1},
 ]},
 
-/* ─── CUSTOM / DEVELOPER EXTENSIONS ─── */
+/* ─── CUSTOM / DEVELOPER EXTENSIONS  [DONE] ─── */
 { id:"custom", title:"Custom / Developer Extensions", isNew:true, vars:[
   {n:"CUSTOM_UNIFORM_INT",                    r:"string:int",     s:[G,L,W,BL], d:"Declare a custom integer uniform. Format: name=value", isNew:true},
   {n:"CUSTOM_UNIFORM_FLOAT",                  r:"string:float",   s:[G,L,W,BL], d:"Declare a custom float uniform", isNew:true},
@@ -648,12 +565,12 @@ const SECTIONS = [
  
 const SCOPE_META = {
   world:  { cls:"world",  label:"--world"  },
-  local:  { cls:"local",  label:"--local"  },
+  custom:  { cls:"custom",  label:"--custom"  },
   global: { cls:"global", label:"--global" },
   biome:  { cls:"biome",  label:"--biome"  },
   block:  { cls:"block",  label:"--block"  },
 };
-const SCOPE_KEY = { world:W, local:C, global:G, biome:B, block:BL };
+const SCOPE_KEY = { world:W, custom:C, global:G, biome:B, block:BL };
  
 let activeFilter = "all";
 let activeSearch = "";
@@ -674,7 +591,7 @@ function rowHtml(v) {
   const depth = v.p ? `d${Math.min(v.p, 3)}` : "";
   const newBadge = v.isNew ? `<span class="badge-new">✦ new</span>` : "";
   const fixNote  = v.fix   ? `<div><span class="badge-fix">⚠ ${v.fix}</span></div>` : "";
-  const copyBtn  = `<button class="var-copy" onclick="copyVar(event, '${v.n}', '${v.r}')' title="Copy variable">📋</button>`;
+  const copyBtn  = `<button class="var-copy" onclick="copyVar(event, '${v.n}', '${v.r}')" title="Copy variable">📋</button>`;
   return `<div class="var-row ${depth} ${v.isNew ? "is-new" : ""}" style="cursor:pointer;" onclick="openModal(event, '${v.n}')">
     <div class="var-name">${v.n}${newBadge}${copyBtn}</div>
     <div class="var-range">${v.r}</div>
@@ -702,87 +619,36 @@ function openModal(e, varName) {
   SECTIONS.forEach(sec => allVars.push(...sec.vars));
   const v = allVars.find(x => x.n === varName);
   if (!v) return;
-
+ 
   document.getElementById("modalVarName").textContent = v.n;
   document.getElementById("modalVarRange").textContent = v.r;
   document.getElementById("modalDesc").textContent = v.d;
   document.getElementById("modalScopeTags").innerHTML = tagHtml(v.s);
-
-  // Find related variables
+ 
+  // Show related variables based on f array
   const relatedContainer = document.getElementById("modalRelated");
   const relatedList = document.getElementById("modalRelatedList");
   
-  // Match variables from same section or with similar keywords
-  const varPrefix = v.n.split("_")[0]; // e.g., "HAZE" from "HAZE_BASEWORLD"
-  const relatedVars = allVars.filter(rv => 
-    rv.n !== v.n && (
-      rv.n.startsWith(varPrefix) || 
-      rv.d.toLowerCase().includes(v.d.toLowerCase().split(' ').slice(0, 2).join(' '))
-    )
-  ).slice(0, 5);
-
-  if (relatedVars.length > 0) {
-    relatedContainer.style.display = "block";
-    relatedList.innerHTML = relatedVars.map(rv => `
-      <div class="modal-related-item" onclick="openModal(event, '${rv.n}')">
-        <div class="modal-related-name">${rv.n}</div>
-        <div class="modal-related-desc">${rv.d}</div>
-      </div>
-    `).join("");
+  if (v.f && v.f.length > 0) {
+    const relatedVars = v.f
+      .map(refId => allVars.find(x => x.i === refId))
+      .filter(x => x);
+    
+    if (relatedVars.length > 0) {
+      relatedContainer.style.display = "block";
+      relatedList.innerHTML = relatedVars.map(rv => `
+        <div class="modal-related-item" onclick="openModal(event, '${rv.n}')">
+          <div class="modal-related-name">${rv.n}${rv.i ? ` <span style="color:var(--text3);font-weight:400;">(${rv.i})</span>` : ""}</div>
+          <div class="modal-related-desc">${rv.d}</div>
+        </div>
+      `).join("");
+    } else {
+      relatedContainer.style.display = "none";
+    }
   } else {
     relatedContainer.style.display = "none";
   }
-
-  // Show referenced variables if available
-  const referencesContainer = document.getElementById("modalReferences");
-  const referencesList = document.getElementById("modalReferencesList");
-  
-  if (v.f && v.f.length > 0) {
-    referencesContainer.style.display = "block";
-    // Parse comma-separated references
-    const refIds = v.f.split(',').map(id => id.trim());
-    const referencedVars = refIds.map(refId => {
-      const refVar = allVars.find(x => x.i === refId);
-      if (!refVar) return null;
-      return {
-        name: refVar.n,
-        range: refVar.r,
-        scope: refVar.s.map(s => {
-          switch(s) {
-            case W: return 'world';
-            case C: return 'custom'; 
-            case G: return 'global';
-            case B: return 'biome';
-            case BL: return 'block';
-            default: return s;
-          }
-        }).join(', '),
-        description: refVar.d,
-        indent: refVar.p || 0,
-        isNew: refVar.isNew || false,
-        id: refVar.i
-      };
-    }).filter(Boolean);
-
-    referencesList.innerHTML = referencedVars.map(ref => `
-      <div class="modal-reference-item">
-        <div class="modal-reference-name">{n:"${ref.name}", r:"${ref.range}", s:[${ref.scope}], d:"${ref.description}", p:${ref.indent}, isNew:${ref.isNew}, i:${ref.id}}</div>
-        <div class="modal-reference-details">
-          <div class="modal-reference-detail"><strong>n:</strong> ${ref.name}</div>
-          <div class="modal-reference-detail"><strong>r:</strong> ${ref.range}</div>
-          <div class="modal-reference-detail"><strong>s:</strong> [${ref.scope}]</div>
-          <div class="modal-reference-detail"><strong>d:</strong> ${ref.description}</div>
-          <div class="modal-reference-detail"><strong>p:</strong> ${ref.indent}</div>
-          ${ref.isNew ? '<div class="modal-reference-detail"><strong>isNew:</strong> true</div>' : ''}
-          <div class="modal-reference-detail"><strong>i:</strong> ${ref.id}</div>
-        </div>
-      </div>
-    `).join("");
-  } else {
-    referencesContainer.style.display = "none";
-    referencesList.innerHTML = '<div class="modal-reference-item"><div class="modal-reference-name">No dependencies</div><div class="modal-reference-details"><div class="modal-reference-detail">This variable has no referenced dependencies</div></div></div>';
-  }
-
+ 
   document.getElementById("modalOverlay").classList.add("open");
 }
  
