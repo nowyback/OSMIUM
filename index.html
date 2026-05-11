@@ -629,16 +629,16 @@ function openModal(e, varName) {
   const relatedContainer = document.getElementById("modalRelated");
   const relatedList = document.getElementById("modalRelatedList");
   
-  if (v.f && v.f.length > 0) {
-    const relatedVars = v.f
-      .map(refId => allVars.find(x => x.i === refId))
+  if (v.ref && v.ref.length > 0) {
+    const relatedVars = v.ref
+      .map(refId => allVars.find(x => x.id === refId))
       .filter(x => x);
     
     if (relatedVars.length > 0) {
       relatedContainer.style.display = "block";
       relatedList.innerHTML = relatedVars.map(rv => `
         <div class="modal-related-item" onclick="openModal(event, '${rv.n}')">
-          <div class="modal-related-name">${rv.n}${rv.i ? ` <span style="color:var(--text3);font-weight:400;">(${rv.i})</span>` : ""}</div>
+          <div class="modal-related-name">${rv.n}${rv.id ? ` <span style="color:var(--text3);font-weight:400;">(${rv.id})</span>` : ""}</div>
           <div class="modal-related-desc">${rv.d}</div>
         </div>
       `).join("");
