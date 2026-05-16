@@ -1,9 +1,9 @@
-# Albedo Visual Engine (AVE) - Shader Integration Guide
+# Osmium Engine (oe) - Shader Integration Guide
 
-This tutorial explains how to connect your shader pack to AVE to access data-driven block attributes for PBR, Path Tracing, and advanced lighting.
+This tutorial explains how to connect your shader pack to oe to access data-driven block attributes for PBR, Path Tracing, and advanced lighting.
 
 ## 1. The Data Bridge
-AVE uploads a "Block Attribute Map" directly to the GPU in a **Shader Storage Buffer Object (SSBO)**.
+oe uploads a "Block Attribute Map" directly to the GPU in a **Shader Storage Buffer Object (SSBO)**.
 - **Binding Point**: `0`
 - **Indexing**: Uses Minecraft's internal Block Registry IDs.
 
@@ -18,13 +18,13 @@ To support **OpenGL 3.3 all the way to 4.3+**, your shader should include the fo
 // Required for SSBO support on OpenGL < 4.3
 #extension GL_ARB_shader_storage_buffer_object : enable
 
-// Define the AVE interface
+// Define the oe interface
 layout(std430, binding = 0) readonly buffer BlockAttributes {
     uint attributes[];  // Packed: R=Scattering, G=Reflectivity, B=Roughness, A=Metallic
 };
 
 // Data structure for your lighting calculations
-struct AVEData {
+struct OEData {
     float scattering;
     float reflectivity;
     float roughness;
@@ -32,9 +32,9 @@ struct AVEData {
 };
 
 // Helper to fetch and normalize data
-AVEData fetchAVEData(uint id) {
+OEData fetchOEData(uint id) {
     uint p = attributes[id];
-    return AVEData(
+    return OEData(
         float(p & 0xFFu) / 255.0,
         float((p >> 8u) & 0xFFu) / 255.0,
         float((p >> 16u) & 0xFFu) / 255.0,
@@ -51,13 +51,13 @@ Store the `blockID` in a G-buffer texture during the main rendering pass. Most s
 ### Step B: Lighting Pass
 In your lighting or path tracing pass:
 1. Sample your ID texture to get the `blockID` for the current pixel.
-2. Call `fetchAVEData(blockID)`.
+2. Call `fetchOEData(blockID)`.
 3. Use the returned values in your PBR or Scattering equations.
 
-## 4. Why use AVE?
+## 4. Why use oe?
 - **Zero Config**: Users don't need to manually write `block.properties` for your shader.
-- **Dynamic**: Changes to AVE's data-driven JSONs are reflected instantly in your shader.
+- **Dynamic**: Changes to oe's data-driven JSONs are reflected instantly in your shader.
 - **Performance**: Fetching from an SSBO is significantly faster than sampling large LUT textures.
 
 ---
-© 2026 CHROMSHOT Studio. All Rights Reserved.
+Â© 2026 CHROMSHOT Studio. All Rights Reserved.

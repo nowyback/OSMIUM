@@ -42,7 +42,7 @@
     * **Refractive Caustics:** Light passing through water surface creates dancing patterns based on PTX rays.
     * **Physical Displacement:** High-quality waves that change the water geometry.
 * **[PLUS] Dynamic Puddles & Ripples:** Puddles that accumulate over time. sharp reflections of light sources.
-* **[NEW] AVE Data Bridge Integration**: Real-time SSBO attribute fetching for data-driven materials.
+* **[NEW] oe Data Bridge Integration**: Real-time SSBO attribute fetching for data-driven materials.
 * **[NEW] Spectral Transparency**: Light blending through tinted glass (Red + Blue = Purple).
 * **[NEW] Selective Texel Emission**: Lights emit color based on individual block texture pixels.
 * **[NEW] Fail-Safe Stability**: Automatic defaults for undefined block data or sliders.

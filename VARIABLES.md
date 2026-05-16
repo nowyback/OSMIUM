@@ -1,305 +1,296 @@
-# Variables
-
------------------------------------------------------------------------------------------------------
-## Haze
-
-- `HAZE_BASEWORLD`=**bool** [$\color{lightblue}{\text{--world}}$]
-    - --> $\color{gray}{\text{Enables base haze in a world}}$
-    - `HAZE_BASEWORLD_DENSITY`=**0 to 255** [$\color{lightblue}{\text{--world}}$]
-        - --> $\color{gray}{\text{Ammount of particles per unit}}$
-        - `HAZE_BASEWORLD_DENSITY_VARIATION`=**0 to 255** [$\color{lightblue}{\text{--world}}$]
-            - --> $\color{gray}{\text{Range of how much the density can change from the original ammount}}$
-            - `HAZE_BASEWORLD_DENSITY_VARIATION_RANGE`=**0 to 255** [$\color{lightblue}{\text{--world}}$]
-                - -> $\color{gray}{\text{How much the density can change in a single minute}}$
-    - `HAZE_BASEWORLD_COLOR`=**hexcode** [$\color{lightblue}{\text{--world}}$]
-        - $\color{gray}{\text{Color of the haze. If you want multiple colors, seperate them by a comma like this: dbc1c1ff,f0f0f0,000000. To increase the chance of a color, type it multiple times.}}$
-    - `HAZE_BASEWORLD_TYPE`=**0 to 255**
-        ```- 0 = none
-        - 1 = fog
-        - 2 = steam
-        - 3 = smoke
-        - 4 = dust
-        - 5 = vapor
-        - 6 = mist
-        - 7 = ash
-        - 8 = haze
-        - 9+ = custom
-    - `HAZE_BASEWORLD_LIGHT_ABsorption`=**0 to 15** (The ammount of light that gets absorbed by the haze) [$\color{lightblue}{\text{--world}}$]
-    - `HAZE_BASEWORLD_LIGHT_SCATTERING`=**0 to 15** (The ammount of light that gets scattered by the haze) [$\color{lightblue}{\text{--world}}$]
-    - `HAZE_BASEWORLD_HEIGHT_FALLOFF`=**0 to 15** [$\color{lightblue}{\text{--world}}$]
-        - $\color{gray}{\text{How fast the haze falls, in 0.1 blocks per second}}$
-    - `HAZE_BASEWORLD_WIND_SPEED`=**0 to 255** [$\color{lightblue}{\text{--world}}$]
-        - $\color{gray}{\text{How fast the wind affects the haze, in 0.05 blocks per second, 0 disables this}}$
-    - `HAZE_BASEWORLD_WIND_DIRECTION`=**0 to 360** [$\color{lightblue}{\text{--world}}$]
-        - $\color{gray}{\text{The direction of the wind in degrees}}$
-    - `HAZE_BASEWORLD_ANISOTROPY`=**-1 to 1** [$\color{lightblue}{\text{--world}}$]
-        - $\color{gray}{\text{Where the light scatters, -1 = back, 1 = forward, suggested 0}}$
-    - `HAZE_BASEWORLD_NOISE_SCALE`=**0 to 255** [$\color{lightblue}{\text{--world}}$]
-    - `HAZE_BASEWORLD_DISTANCE_FALLOFF`=**0 to 255** [$\color{lightblue}{\text{--world}}$]
-    - `HAZE_BASEWORLD_LAYER_PRIORITY`=**0-255** [$\color{lightblue}{\text{--world}}$]
-        - $\color{gray}{\text{Z-order when multiple custom haze layers overlap. Higher = rendered on top}}$
----
-<br>
-
-- `HAZE_BASEBIOME`=**bool** [$\color{lightblue}{\text{--biome}}$]
-    - $\color{gray}{\text{Enables base haze in a biome}}$
-    - `HAZE_BASEBIOME_DENSITY`=**0 to 255** [$\color{lightblue}{\text{--biome}}$]
-        - $\color{gray}{\text{Particles per Qubic messurement}}$
-        - `HAZE_BASEBIOME_DENSITYVARIATION`=**0 to 255** [$\color{lightblue}{\text{--biome}}$]
-            - $\color{gray}{\text{+- how many particles more or less}}$
-        - `HAZE_BASEBIOME_DENSITYVARIATIONRANGE`=**0 to 255** [$\color{lightblue}{\text{--biome}}$]
-            - $\color{gray}{\text{By how much it can change in a single minute}}$
-    - `HAZE_BASEBIOME_COLOR`=**hexcode** [$\color{lightblue}{\text{--biome}}$]
-        - $\color{gray}{\text{Color of the haze. If you want multiple colors, seperate them by a comma like this: dbc1c1ff,f0f0f0,000000. To increase the chance of a color, type it multiple times.}}$
-    - `HAZE_BASEBIOME_TYPE`=**0 to 255**
-        ```- 0 = none
-        - 1 = fog
-        - 2 = steam
-        - 3 = smoke
-        - 4 = dust
-        - 5 = vapor
-        - 6 = mist
-        - 7 = ash
-        - 8 = haze
-        - 9+ = custom```
-    - `HAZE_BASEBIOME_LIGHT_ABORPTION`=**0 to 15** (The ammount of light that gets absorbed by the haze) [$\color{lightblue}{\text{--block}}$]
-    - `HAZE_BASEBIOME_LIGHT_SCATTERING`=**0 to 15** (The ammount of light that gets scattered by the haze) [$\color{lightblue}{\text{--block}}$]
-    - `HAZE_BASEBIOME_HEIGHT_FALLOFF`=**0 to 15** [$\color{lightblue}{\text{--biome}}$]
-        - $\color{gray}{\text{How fast the haze falls, in 0.1 blocks per second}}$
-    - `HAZE_BASEBIOME_WIND_SPEED`=**0 to 255** [$\color{lightblue}{\text{--biome}}$]
-        - $\color{gray}{\text{How fast the wind affects the haze, in 0.05 blocks per second, 0 disables this}}$
-    - `HAZE_BASEBIOME_WIND_DIRECTION`=**0 to 360** [$\color{lightblue}{\text{--biome}}$]
-        - $\color{gray}{\text{The direction of the wind in degrees}}$
-    - `HAZE_BASEBIOME_ANISOTROPY`=**-1 to 1** [$\color{lightblue}{\text{--biome}}$]
-        - $\color{gray}{\text{Where the light scatters, -1 = back, 1 = forward, suggested 0}}$
-    - `HAZE_BASEBIOME_NOISE_SCALE`=**0 to 255** [$\color{lightblue}{\text{--biome}}$]
-    - `HAZE_BASEBIOME_DISTANCE_FALLOFF`=**0 to 255** [$\color{lightblue}{\text{--biome}}$]
-    - `HAZE_BIOME_BLEND_MODE`=**0-63** [$\color{lightblue}{\text{--biome}}$]
-        - $\color{gray}{\text{Radius in blocks over which haze blends at biome borders}}$
-    - `HAZE_BIOME_BLEND_MODE`=**0-3** [$\color{lightblue}{\text{--biome}}$]
-        - 0=linear 1=cubic 2=nearest 3=custom
-    - `HAZE_BIOME_LAYER_PRIORITY`=**0-255** [$\color{lightblue}{\text{--biome}}$]
-        - $\color{gray}{\text{Z-order when multiple custom haze layers overlap. Higher = rendered on top}}$
----
-<br>
-
-- `HAZE_CUSTOM`=**bool [$\color{lightblue}{\text{--block}}$]
-    - $\color{gray}{\text{Enables custom haze in a biome}}$
-    - `HAZE_CUSTOM_DENSITY`=**0 to 255** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{Particles per Qubic messurement}}$
-        - `HAZE_CUSTOM_DENSITY_VARIATION`=**0 to 255** [$\color{lightblue}{\text{--block}}$]
-            - $\color{gray}{\text{+- how many particles more or less}}$
-        - `HAZE_CUSTOM_DENSITY_VARIATION_RANGE`=**0 to 255** [$\color{lightblue}{\text{--block}}$]
-            - $\color{gray}{\text{By how much it can change in a single minute}}$
-    - `HAZE_CUSTOM_COLOR`=**hexcode** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{Color of the haze. If you want multiple colors, seperate them by a comma like this: dbc1c1ff,f0f0f0,000000. To increase the chance of a color, type it multiple times.}}$
-    - `HAZE_CUSTOM_TYPE`=**0 to 255**
-        - 0 = none
-        - 1 = fog
-        - 2 = steam
-        - 3 = smoke
-        - 4 = dust
-        - 5 = vapor
-        - 6 = mist
-        - 7 = ash
-        - 8 = haze
-        - 9+ = custom
-    - `HAZE_CUSTOM_LIGHT_ABSORPTION` = **0 to 15** (The ammount of light that gets absorbed by the haze) [$\color{lightblue}{\text{--block}}$]
-    - `HAZE_CUSTOM_LIGHT_SCATTERING` = **0 to 15** (The ammount of light that gets scattered by the haze) [$\color{lightblue}{\text{--block}}$]
-    - `HAZE_CUSTOM_HEIGHT_FALLOFF` = **0 to 15** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{How fast the haze falls, in 0.1 blocks per second}}$
-    - `HAZE_CUSTOM_WIND_SPEED`=**0 to 255** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{How fast the wind affects the haze, in 0.05 blocks per second, 0 disables this}}$
-    - `HAZE_CUSTOM_WIND_DIRECTION`=**0 to 360** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{The direction of the wind in degrees}}$
-    - `HAZE_CUSTOM_ANISOTROPY`=**-1 to 1** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{Where the light scatters, -1 = back, 1 = forward, suggested 0}}$
-    - `HAZE_CUSTOM_NOISE_SCALE`=**0 to 255** [$\color{lightblue}{\text{--block}}$]
-    - `HAZE_CUSTOM_DISTANCE_FALLOFF`=**0 to 255** [$\color{lightblue}{\text{--block}}$]
-    - `HAZE_CUSTOM_BLEND_MODE`=**0-3** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{0=linear 1=cubic 2=nearest 3=custom}}$
-    - `HAZE_CUSTOM_LAYER_PRIORITY`=**0-255** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{Z-order when multiple custom haze layers overlap. Higher = rendered on top}}$
----
-<br>
-
-- `HAZE_PARTICLES_TO_HAZE`=**bool** [$\color{lightblue}{\text{--block}}$]
-    - --> $\color{gray}{\text{Automatically renders particles as a haze}}$
-    - `HAZE_PARTICLE_TYPE`=**0 to 255**
-    - `HAZE_VARIATION_AMOUNT`**0 to 255  (by how much it can change in a single minute) [$\color{lightblue}{\text{--block}}$]
----
-<br>
-
-## Light Handeling
-- `LIGHT_ABSORBION`=**0 to 15** (reduces the lightlevel by the value given in this var) [$\color{lightblue}{\text{--block}}$]
-    - $\color{gray}{\text{0 = all light passes through, 15 = absorbs all light}}$
-- `LIGHT_REFLECTION`=**0 to 15** (how much light of the lightlevel should reflect, the rest will be passed through the block) [$\color{lightblue}{\text{--block}}$]
-    - $\color{gray}{\text{0 = all light passes through, 15 = max reflection}}$
-- `LIGHT_REFLECTIONBLUR`=**0 to 15** (how much the light blurrs)
-- `LIGHT_SCATTERING`=**bool** [$\color{lightblue}{\text{--block}}$]
-    - `LIGHT_SCATTERING_VARIATION`=**0 to 255** (how much the light scatters)
-        - $\color{gray}{\text{in 0.1 degrees}}$
-- `LIGHT_CHROMATICABBERATION`=**bool**    [$\color{lightblue}{\text{--block}}$]
-    - `LIGHT_CHROMATICABBERATION_STRENGTH`=**0 to 7**   (how much the light abberates)
-        - $\color{gray}{\text{0 = none, 7 = changes to the total color of a pixel, base value = 3 }}$
-- `LIGHT_FALLOFF_GLOBAL`=**0 to 63** (slow light falloff with the Inverse Square Falloff) [$\color{lightblue}{\text{--block}}$]
-- `LIGHT_FALLOFF_WORLD`=**0 to 63**  (slow light falloff with the Inverse Square Falloff) [$\color{lightblue}{\text{--world}}$]
-    - $I(d) = \frac{1}{1 + d + d^2}$ -> $\color{gray}{\text{Smooth light falloff with the Inverse Square Falloff}}$
-- `LIGHT_FLICKER`=**bool**    [$\color{lightblue}{\text{--block}}$]
-    - `LIGHT_FLICKER_RATE`=**0 to 63** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{the frequency of the flicker in 10ms}}$
-    - `LIGHT_FLICKER_RATE_VARIATION`=**0 to 63** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{how much the frequenzy changes in 10ms}}$
-    - `LIGHT_FLICKER_INTENSITY`=**0 to 15** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{the intensity of the flicker, in lightlevels}}$
-    - `LIGHT_FLICKER_INTENSITY_VARIATION`=**0 to 63** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{how much the intensity can vary in 10ms}}$
-- `LIGHT_EMMISSION`=**bool** [$\color{lightblue}{\text{--block}}$]
-    - `LIGHT_EMMISION_COLOR`=**hexcode** [$\color{lightblue}{\text{--block}}$]
-    - `LIGHT_EMISSION_RANGE_OVERRIDE`=**0 to 63** [$\color{lightblue}{\text{--block}}$]
-        - $\color{gray}{\text{If set to a value above 0, the light will override the range of the light}}$
-    - `LIGHT_EMMISION_TYPE`=**0-3**
-        - $\color{gray}{\text{0 = Point Light / Laser, 1 = Flashlight [CONE], 2 = Surround Illumination, 3 = Custom}}$
-        - `LIGHT_EMMISION_ANGLE=`***0-360,0-360,0-360**
-            - $\color{gray}{\text{The angle of the light in degrees, first value is the X-Axis angle, second is the Y-Axis angle, third is the Z-Axis angle}}$
-        - `LIGHT_EMMISION_SOFTNESS`=**0-63**
-            - $\color{gray}{\text{The softness of the light, 0 = hard edge, 63 = very soft edge}}$
-    - `LIGHT_TEXEL_MODE`=**bool**
-        - $\color{gray}{\text{If true, the light will be rendered as a texel, if false, it will be rendered as a central point}}$
-        - `LIGHT_TEXEL_BLENDING`=**0 to 15**
-            - $\color{gray}{\text{How much the texels blend with each other}}$
-- `LIGHT_EMISSION_COLOR`=**hex** [$\color{lightblue}{\text{--block}}$] - Tints the emitted light of a block
-- `LIGHT_EMISSION_SPECTRUM`=**0–7** [$\color{lightblue}{\text{--block}}$] - 0=white 1=warm 2=cool 3=fire 4=neon 5=magic 6=moon 7=custom
-- `LIGHT_EMISSION_RANGE`=**0–63** [$\color{lightblue}{\text{--block}}$] - Override emission range in blocks
-- `LIGHT_CONE_ANGLE`=**0–180** [$\color{lightblue}{\text{--block}}$] - Spotlight cone angle in degrees (0=point light, 180=sphere)
-- `LIGHT_CONE_SOFTNESS`=**0–15** [$\color{lightblue}{\text{--block}}$] - Edge softness of spotlight cone
-- `LIGHT_SUBSURFACE_SCATTERING`=**bool** [$\color{lightblue}{\text{--block}}$] - Enables SSS for semi-translucent blocks (leaves, ice)
-- `LIGHT_SUBSURFACE_RADIUS`=**0–15** [$\color{lightblue}{\text{--block}}$] - SSS scatter radius in 0.1 block steps
-- `LIGHT_SUBSURFACE_COLOR`=**hex** [$\color{lightblue}{\text{--block}}$] - Colour tint of subsurface scattered light
-
-<details>
-<summary></b>Light Falloff Table</b></summary>
-
-    | Float | Distance | Falloff per Block |
-    |-------|----------|-------------------|
-    | 0     | 0        | inf               |
-    | 1     | 1.5      | 10b               |
-    | 5     | 7.5      | 2b                |
-    | 10    | 15       | 1b                |
-    | 15    | 22.5     | 0.5b              |
-    | 20    | 30       | 0.25b             |
-    | 25    | 37.5     | 0.125b            |
-    | 30    | 45       | 0.0625b           |
-    | 35    | 52.5     | 0.03125b          |
-    | 40    | 60       | 0.015625b         |
-    | 45    | 67.5     | 0.0078125b        |
-    | 50    | 75       | 0.00390625b       |
-    | 55    | 82.5     | 0.001953125b      |
-    | 60    | 90       | 0.0009765625b     |
-    | 63    | 97.5     | 0.00048828125b    |
-
-</details>
-
-</details>
-
------------------------------------------------------------------------------------------------------
-
-## Surface & Material
-
-- `SURF_ROUGHNESS`=**0–15** [$\color{lightblue}{\text{--block}}$] - PBR roughness. 0=mirror 15=fully diffuse 
-- `SURF_METALLIC`=**0–15** [$\color{lightblue}{\text{--block}}$] - PBR metallic factor. 0=dielectric 15=conductor 
-- `SURF_REFLECTANCE`=**0–15** [$\color{lightblue}{\text{--block}}$] - Base reflectance at normal incidence (F0) 
-- `SURF_EMISSIVE`=**0–15** [$\color{lightblue}{\text{--block}}$] - Emissive intensity. Stacks with block light level 
-- `SURF_EMISSIVE_COLOR`=**hex** [$\color{lightblue}{\text{--block}}$] - Emissive colour override 
-- `SURF_NORMAL_STRENGTH`=**0–15** [$\color{lightblue}{\text{--block}}$] - Intensity of normal/bump map. 0=flat 15=full depth 
-- `SURF_PARALLAX`=**bool** [$\color{lightblue}{\text{--block}}$] - Enables parallax occlusion mapping 
-- `SURF_PARALLAX_DEPTH`=**0–15** [$\color{lightblue}{\text{--block}}$] - Depth of parallax displacement in 0.05 block steps 
-- `SURF_PARALLAX_STEPS`=**1–64** [$\color{lightblue}{\text{--block}}$] - Ray march steps — higher = more accurate but slower 
-- `SURF_DISPLACEMENT`=**bool** [$\color{lightblue}{\text{--block}}$] - Enables geometric vertex displacement 
-- `SURF_DISPLACEMENT_SCALE`=**0–15** [$\color{lightblue}{\text{--block}}$] - Displacement height in 0.05 block steps 
-- `SURF_AO_STRENGTH`=**0–15** [$\color{lightblue}{\text{--block}}$] - Per-block ambient occlusion intensity override 
-- `SURF_TRANSLUCENCY`=**0–15** [$\color{lightblue}{\text{--block}}$] - Amount of light transmitted through thin geometry 
-- `SURF_WAVING`=**bool** [$\color{lightblue}{\text{--block}}$] - Enables vertex waving (leaves, grass, banners) 
-- `SURF_WAVING_AMPLITUDE`=**0–15** [$\color{lightblue}{\text{--block}}$] - Wave height in 0.05 block steps 
-- `SURF_WAVING_SPEED`=**0–15** [$\color{lightblue}{\text{--block}}$] - Wave frequency multiplier 
-- `SURF_WAVING_WIND_INFLUENCE`=**0–15** [$\color{lightblue}{\text{--block}}$] - How much HAZE_*_WIND_* values affect waving direction 
-- `SURF_CUSTOM_SHADER`=**string** [$\color{lightblue}{\text{--block}}$] - Path to a GLSL snippet injected into surface shader for this block type 
-
------------------------------------------------------------------------------------------------------
-
-## Puddles
-- `PUDDLE_ISDIRTY`=**bool** (applies a dirtier look) [$\color{lightblue}{\text{--block}}$]
-- `PUDDLE_DEPTH`=**0 to 15**  (how deep the puddle is, changes the ammount of ripples / splashes) [$\color{lightblue}{\text{--block}}$]
-- `p_ripple_rate`=**0–15** [$\color{lightblue}{\text{--local}}$] - Ripple frequency in rain. 0=calm, 15=heavy 
-- `p_ripple_strength`=**0–15** [$\color{lightblue}{\text{--local}}$] - Ripple distortion amplitude 
-- `p_reflection_strength`=**0–15** [$\color{lightblue}{\text{--local}}$] - Mirror reflectivity of puddle surface 
-- `p_evaporation_speed`=**0–15** [$\color{lightblue}{\text{--local}}$] - How fast puddles shrink after rain stops 
-
------------------------------------------------------------------------------------------------------
-
-## Fluids
-- `FLUID_VISIBILITY`=**0 to 255    (how far you can see through water) [$\color{lightblue}{\text{-biome}}$]
-- `FLUID_FALLOFF`=**0 to 63    (slow light falloff with the Inverse Square Falloff, see l_falloff_table) [$\color{lightblue}{\text{--biome}}$]
-- `FLUID_MURKINESS`=**0 to 255 (ammount of particles in the water in cubic messurements) [$\color{lightblue}{\text{--biome}}$]
-    - `FLUID_MURKINESS_LIGHTSCATTERING`=**0 to 255  (how much the light scatters in the water, in 0.1 degrees) [$\color{lightblue}{\text{--biome}}$]
-    - `FLUID_MURKINESS_LIGHTABSORPTION`=**0 to 15   (how much light is absorbed by the murkiness) [$\color{lightblue}{\text{--biome}}$]
-    - `FLUID_MURKINESS_COLOR`=**hexcode  (changes the color of the water, use null if default) [$\color{lightblue}{\text{--biome}}$]
-- `FLUID_REFRACTIONINDEX`=**0 to 15    (how much the view "bends" when looking underwater) [$\color{lightblue}{\text{--biome}}$]
-- `FLUID_WAVE_HEIGHT`=**0 to 15   (how high the waves are, in 0.05 blocks) [$\color{lightblue}{\text{--biome}}$]
-- `FLUID_WAVE_SPEED`=**0 to 15   (how fast the waves move in 0.25 blocks per second) [$\color{lightblue}{\text{--biome}}$]
-- `FLUID_VISCOSITY`=**0 to 15    (how viscous the water is, changes how you interact with it (waves included)) [$\color{lightblue}{\text{--biome}}$]
-- `f_foam_threshold`=**0–15** [$\color{lightblue}{\text{--biome}}$] - Wave height at which foam/whitecap appears ✦ new
-- `f_foam_color`=**hex** [$\color{lightblue}{\text{--biome}}$] - Foam colour ✦ new
-- `f_caustics_strength`=**0–15** [$\color{lightblue}{\text{--biome}}$] - Intensity of caustic light patterns on underwater surfaces ✦ new
-- `f_caustics_scale`=**0–15** [$\color{lightblue}{\text{--biome}}$] - Scale of caustic pattern in 0.1 block steps ✦ new
-- `f_depth_color`=**hex** [$\color{lightblue}{\text{--biome}}$] - Colour at maximum depth (for depth-based tinting) ✦ new
-- `f_depth_falloff`=**0–15** [$\color{lightblue}{\text{--biome}}$] - Depth over which colour blends to f_depth_color ✦ new
-- `f_bioluminescence`=**bool** [$\color{lightblue}{\text{--biome}}$] - Enables glowing particles in fluid ✦ new
-- `f_bioluminescence_color`=**hex** [$\color{lightblue}{\text{--biome}}$] - Particle glow colour ✦ new
-- `f_bioluminescence_density`=**0–255** [$\color{lightblue}{\text{--biome}}$] - Glowing particle count ✦ new
-- `f_custom_shader`=**string** [$\color{lightblue}{\text{--biome}}$] - Path to GLSL snippet injected into fluid surface shader ✦ new
-
------------------------------------------------------------------------------------------------------
-
-## Global Illumination
-
-- `g_world`=**0 to 15    (how much global illumination affects the world) [$\color{lightblue}{\text{--global}}$]
-    - $\color{gray}{\text{0 = no global illumination, 15 = max global illumination}}$
-- `g_biome`=**0 to 15    (how much global illumination affects the biome) [$\color{lightblue}{\text{--global}}$]
-    - $\color{gray}{\text{0 = no global illumination, 15 = max global illumination}}$
-- `g_color`=**0 to 15    (which color is used for global illumination(leave blank for default overworld)) [$\color{lightblue}{\text{--global}}$]
-    - $\color{gray}{\text{0 = default, 1-15 = custom color}}$
-- `g_bounce_count`=**1–8** [$\color{lightblue}{\text{--global}}$] - Number of indirect light bounces. Higher = softer, slower 
-- `g_sky_contribution`=**0–15** [$\color{lightblue}{\text{--global}}$] - How strongly sky colour bleeds into shadowed areas 
-- `g_emissive_contribution`=**0–15** [$\color{lightblue}{\text{--global}}$] - How much emissive blocks contribute to GI 
-- `g_resolution`=**0–3** [$\color{lightblue}{\text{--global}}$] - 0=low (fast) 1=medium 2=high 3=per-texel (expensive) 
-- `g_temporal_blend`=**0–15** [$\color{lightblue}{\text{--global}}$] - Temporal accumulation frames — reduces noise, increases ghosting 
-
------------------------------------------------------------------------------------------------------
-
-## Weather
-
-- `w_weather`=**bool    (enable weather) [$\color{lightblue}{\text{--world}}$]
-    - `w_rain`=**bool    (enable rain) [$\color{lightblue}{\text{--world}}$]
-        - `w_rain_density`=**0 to 255  (rain density) [$\color{lightblue}{\text{--world}}$]
-        - `w_rain_speed`=**0 to 15   (rain speed) [$\color{lightblue}{\text{--world}}$]
-    - `w_thunder`=**bool    (enable thunder) [$\color{lightblue}{\text{--world}}$]
-        - `w_thunder_frequency`=**0 to 255  (thunder frequency) [$\color{lightblue}{\text{--world}}$]
+Here is the provided configuration data formatted into a clean, scannable Markdown document with organized tables for each section.
 
 ---
-<br>
 
-## Sky Texture
-- `STAR_TYPE`=**integer** (type of stars rendered) [$\color{lightblue}{\text{--global}}$]
-- `SKY_TEXTURE_BRIGHTNESS`=**float** (brightness of sky textures) [$\color{lightblue}{\text{--global}}$]
+## 1. Haze (`haze`)
 
------------------------------------------------------------------------------------------------------
+*Enables and configures volumetric haze, fog, and particle transitions across worlds and biomes.*
 
-## Shadows
-- `SHADOW_MAP_BIAS`=**float** (bias value for shadow mapping) [$\color{lightblue}{\text{--global}}$]
-- `SHADOW_BASIC_BLUR`=**float** (basic blur amount for shadows) [$\color{lightblue}{\text{--global}}$]
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `HAZE_BASEWORLD` | `bool` | `[W]` | Enables base haze in a world. |
+| `HAZE_BASEWORLD_DENSITY` | `0–255` | `[W]` | Amount of particles per unit. |
+| `HAZE_BASEWORLD_DENSITY_VARIATION` | `0–255` | `[W]` | Range the density can deviate from base. |
+| `HAZE_BASEWORLD_DENSITY_VARIATION_RANGE` | `0–255` | `[W]` | Max change per minute. |
+| `HAZE_BASEWORLD_COLOR` | `hex[,hex…]` | `[W]` | Haze colour(s). Repeat a hex to increase its probability. |
+| `HAZE_BASEWORLD_TYPE` | `0–255` | `[W]` | `0`=none, `1`=fog, `2`=steam, `3`=smoke, `4`=dust, `5`=vapor, `6`=mist, `7`=ash, `8`=haze, `9+`=custom. |
+| `HAZE_BASEWORLD_LIGHT_ABSORPTION` | `0–15` | `[W]` | Light absorbed by haze (`0`=none, `15`=all). |
+| `HAZE_BASEWORLD_LIGHT_SCATTERING` | `0–15` | `[W]` | Light scattered by haze. |
+| `HAZE_BASEWORLD_HEIGHT_FALLOFF` | `0–15` | `[W]` | Haze fall rate in 0.1 blocks/sec. |
+| `HAZE_BASEWORLD_WIND_SPEED` | `0–255` | `[W]` | Wind influence speed in 0.05 blocks/sec (`0`=off). |
+| `HAZE_BASEWORLD_WIND_DIRECTION` | `0–360` | `[W]` | Wind direction in degrees. |
+| `HAZE_BASEWORLD_ANISOTROPY` | `-1–1` | `[W]` | Light scatter direction: `-1`=back, `1`=forward, `0`=neutral. |
+| `HAZE_BASEWORLD_NOISE_SCALE` | `0–255` | `[W]` | Scale of density noise pattern. |
+| `HAZE_BASEWORLD_DISTANCE_FALLOFF` | `0–255` | `[W]` | Density falloff with view distance. |
+| `HAZE_BASEWORLD_LAYER_PRIORITY` New | `0-255` | `[W]` | Z-order when multiple custom haze layers overlap. Defines which layer the base haze renders on. |
+| `HAZE_BASEBIOME` | `bool` | `[B]` | Enables base haze in a biome. |
+| `HAZE_BASEBIOME_DENSITY` | `0–255` | `[B]` | Particles per cubic unit. |
+| `HAZE_BASEBIOME_DENSITY_VARIATION` | `0–255` | `[B]` | $\pm$ particle deviation. |
+| `HAZE_BASEBIOME_DENSITY_VARIATION_RANGE` | `0–255` | `[B]` | Max change per minute. |
+| `HAZE_BASEBIOME_COLOR` | `hex[,hex…]` | `[B]` | Haze colour(s). |
+| `HAZE_BASEBIOME_TYPE` | `0–255` | `[B]` | `0`=none, `1`=fog, `2`=steam, `3`=smoke, `4`=dust, `5`=vapor, `6`=mist, `7`=ash, `8`=haze, `9+`=custom. |
+| `HAZE_BASEBIOME_LIGHT_ABSORPTION` | `0–15` | `[B]` | Light absorbed by haze. |
+| `HAZE_BASEBIOME_LIGHT_SCATTERING` | `0–15` | `[B]` | Light scattered. |
+| `HAZE_BASEBIOME_HEIGHT_FALLOFF` | `0–15` | `[B]` | Fall rate in 0.1 blocks/sec. |
+| `HAZE_BASEBIOME_WIND_SPEED` | `0–255` | `[B]` | Wind influence in 0.05 blocks/sec. |
+| `HAZE_BASEBIOME_WIND_DIRECTION` | `0–360` | `[B]` | Wind direction in degrees. |
+| `HAZE_BASEBIOME_ANISOTROPY` | `-1–1` | `[B]` | Scatter direction. |
+| `HAZE_BASEBIOME_NOISE_SCALE` | `0–255` | `[B]` | Noise pattern scale. |
+| `HAZE_BASEBIOME_DISTANCE_FALLOFF` | `0–255` | `[B]` | Distance density falloff. |
+| `HAZE_BIOME_BLEND` | `bool` | `[B]` | Enables biome blending. |
+| `HAZE_BIOME_BLEND_RADIUS` New | `0-63` | `[B]` | Radius in blocks over which haze blends at biome borders. |
+| `HAZE_BIOME_BLEND_MODE` New | `0-3` | `[B]` | `0`=linear, `1`=cubic, `2`=nearest, `3`=custom. |
+| `HAZE_BIOME_LAYER_PRIORITY` New | `0-255` | `[B]` | Z-order when multiple custom haze layers overlap. |
+| `HAZE_BIOME_REMOVE_WORLD_HAZE` New | `bool` | `[B]` | Removes world haze in the area where biome haze is enabled. |
+| `HAZE_CUSTOM` | `bool` | `[C]` | Enables a custom haze layer on top of base biome haze. |
+| `HAZE_CUSTOM_DENSITY` | `0–255` | `[C]` | Particles per cubic unit. |
+| `HAZE_CUSTOM_DENSITY_VARIATION` | `0–255` | `[C]` | $\pm$ deviation. |
+| `HAZE_CUSTOM_DENSITY_VARIATION_RANGE` | `0–255` | `[C]` | Max change per minute. |
+| `HAZE_CUSTOM_COLOR` | `hex[,hex…]` | `[C]` | Colour(s) of custom haze. |
+| `HAZE_CUSTOM_TYPE` | `0–255` | `[C]` | Type index (same table as base). |
+| `HAZE_CUSTOM_LIGHT_ABSORPTION` | `0–15` | `[C]` | Light absorption. |
+| `HAZE_CUSTOM_LIGHT_SCATTERING` | `0–15` | `[C]` | Light scattering. |
+| `HAZE_CUSTOM_HEIGHT_FALLOFF` | `0–15` | `[C]` | Fall rate in 0.1 blocks/sec. |
+| `HAZE_CUSTOM_WIND_SPEED` | `0–255` | `[C]` | Wind in 0.05 blocks/sec. |
+| `HAZE_CUSTOM_WIND_DIRECTION` | `0–360` | `[C]` | Wind direction. |
+| `HAZE_CUSTOM_ANISOTROPY` | `-1–1` | `[C]` | Scatter direction. |
+| `HAZE_CUSTOM_NOISE_SCALE` | `0–255` | `[C]` | Noise scale. |
+| `HAZE_CUSTOM_DISTANCE_FALLOFF` | `0–255` | `[C]` | Distance falloff. |
+| `HAZE_CUSTOM_BLEND` | `bool` | `[C]` | Enables custom haze blending. |
+| `HAZE_CUSTOM_BLEND_RADIUS` New | `0-63` | `[C]` | Radius in blocks over which custom haze blends at biome borders. |
+| `HAZE_CUSTOM_BLEND_MODE` New | `0-3` | `[C]` | `0`=linear, `1`=cubic, `2`=nearest, `3`=custom. |
+| `HAZE_CUSTOM_LAYER_PRIORITY` New | `0-255` | `[C]` | Z-order when multiple custom haze layers overlap. |
+| `HAZE_CUSTOM_REMOVE_WORLD_HAZE` New | `bool` | `[C]` | Removes world haze in the area where custom haze is enabled. |
+| `HAZE_CUSTOM_REMOVE_BIOME_HAZE` New | `bool` | `[C]` | Removes biome haze in the area where custom haze is enabled. |
+| `HAZE_PARTICLES_TO_HAZE` | `bool` | `[C]` | Auto-renders existing particle systems as volumetric haze. |
+| `HAZE_VARIATION_AMOUNT` | `0–255` | `[C]` | Max change per minute from particle haze. |
+| `HAZE_TYPE` | `0–255` | `[C]` | Type index (same table as base). |
+| `HAZE_PARTICLE_TYPE` | `W,B,C` | `[C]` | Which particle type ID to convert. |
 
------------------------------------------------------------------------------------------------------
+---
 
-## Performance
-Modular Performance: Since this is modular, make sure to wrap these features in #ifdef tags. That way, if a modder doesn't use "Haze," your 9070 XT doesn't waste cycles even looking for the variable.
+## 2. Light Emission (`light_emission`) New Section
+
+*Handles dynamically emitted light sources from blocks, including directions, shapes, and structural scattering.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `LIGHT_EMISSION` | `bool` | `[BL]` | Enables light emission. |
+| `LIGHT_EMISSION_COLOR` | `hex` | `[BL]` | Colour of emitted light. |
+| `LIGHT_EMISSION_RANGE_OVERRIDE` | `0 to 63` | `[BL]` | If > 0, overrides the standard light source range. |
+| `LIGHT_EMMISION_TYPE` | `0-3` | `[BL]` | `0` = Point Light / Laser, `1` = Flashlight [CONE], `2` = Surround Illumination, `3` = Custom. |
+| `LIGHT_EMMISION_ANGLE_X_AXIS` | `0-360` | `[BL]` | Direction of the lighting on the X Axis. |
+| `LIGHT_EMMISION_ANGLE_Y_AXIS` | `0-360` | `[BL]` | Direction of the lighting on the Y Axis. |
+| `LIGHT_EMMISION_ANGLE_Z_AXIS` | `0-360` | `[BL]` | Direction of the lighting on the Z Axis. |
+| `LIGHT_EMMISION_SOFTNESS` | `0-63` | `[BL]` | The softness of the light (`0` = hard edge, `63` = very soft edge). |
+| `LIGHT_TEXEL_MODE` | `bool` | `[BL]` | If true, texel rendering is active; if false, it renders from the center of the block. |
+| `LIGHT_TEXEL_BLENDING` | `0-15` | `[BL]` | How much adjacent texels blend with each other. |
+| `LIGHT_SUBSURFACE_SCATTERING` | `bool` | `[BL]` | Enables Subsurface Scattering (SSS) for semi-translucent blocks (leaves, ice). |
+| `LIGHT_ADVANCED_SUBSURFACE_SCATTERING` | `bool` | `[BL]` | Enables pixel-based SSS for semi-translucent blocks. |
+
+---
+
+## 3. Light Handling (`light`)
+
+*Controls global properties of light transmission, reflections, falloffs, and aesthetic artifacts.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `LIGHT_ABSORPTION` | `0–15` | `[BL]` | Reduces light level per reflection. `0` = all light absorbed, `15` = all light reflects. |
+| `LIGHT_REFLECTIONBLUR` | `0–15` | `[BL]` | Blurriness of reflected light. |
+| `LIGHT_SCATTERING` | `bool` | `[BL]` | Enables directional light scattering. |
+| `LIGHT_SCATTERING_VARIATION` | `0–255` | `[BL]` | Scatter spread in 0.1-degree steps. |
+| `LIGHT_CHROMATICABBERATION` | `bool` | `[BL]` | Enables chromatic aberration on transmitted light. |
+| `LIGHT_CHROMATICABBERATION_STRENGTH` | `0–7` | `[BL]` | `0` = none, `3` = default, `7` = full-pixel shift. |
+| `LIGHT_FALLOFF_GLOBAL` | `0–63` | `[G]` | Per-block light falloff via Inverse Square law. (See falloff table). |
+| `LIGHT_FALLOFF_WORLD` | `0–63` | `[W]` | World-wide light falloff override. |
+| `LIGHT_FLICKER` | `bool` | `[BL]` | Enables light flickering. |
+| `LIGHT_FLICKER_RATE` | `0–63` | `[BL]` | Flicker frequency in 10ms steps. |
+| `LIGHT_FLICKER_RATE_VARIATION` | `0–63` | `[BL]` | Frequency jitter in 10ms steps. |
+| `LIGHT_FLICKER_INTENSITY` | `0–15` | `[BL]` | Flicker amplitude measured in light levels. |
+| `LIGHT_FLICKER_INTENSITY_VARIATION` | `0–63` | `[BL]` | Intensity jitter in 10ms steps. |
+
+---
+
+## 4. Puddles (`puddle`)
+
+*Configures environmental surface water collection attributes.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `PUDDLE_COLOR` | `hex` | `[B]` | Color of the puddle. |
+| `PUDDLE_DEPTH` | `0–15` | `[B]` | Puddle depth. Generically affects ripple count, evaporation duration, and splash scale. |
+| `PUDDLE_VISCOSITY` New | `0–15` | `[B]` | Ripple distortion amplitude. |
+| `PUDDLE_REFLECTION_STRENGHT` New | `0–15` | `[B]` | Mirror reflectivity behavior of the puddle surface. |
+| `PUDDLE_EVAPORATION_SPEED` New | `0–15` | `[B]` | How fast puddles shrink after precipitation ceases. |
+
+---
+
+## 5. Fluids (`fluid`)
+
+*Manages visibility, wave behaviors, physics, and rendering overrides within custom volumetric liquids.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `FLUID_VISIBILITY` | `0–255` | `[C]` | Visibility distance through fluid measured in blocks. |
+| `FLUID_LIGHT_FALLOFF` | `0–63` | `[C]` | Light falloff inside the fluid medium (see falloff table). |
+| `FLUID_MURKINESS` | `0–255` | `[C]` | Suspended particle density in cubic units. |
+| `FLUID_LIGHT_SCATTERING` | `0–255` | `[C]` | Light scatter inside fluid in 0.1-degree steps. |
+| `FLUID_LIGHT_ABSORPTION` | `0–15` | `[C]` | Light absorbed specifically by fluid murkiness. |
+| `FLUID_COLOR` | `hex / null` | `[C]` | Fluid colour override. `null` = fallback to default. |
+| `FLUID_WAVE_HEIGHT` | `0–15` | `[C]` | Wave height scaling in 0.05-block steps. |
+| `FLUID_WAVE_SPEED` | `0–15` | `[C]` | Wave propagation speed in 0.25 blocks/sec. |
+| `FLUID_VISCOSITY` | `0–15` | `[C]` | Fluid thickness — dampens waves and restricts entity physics. |
+| `FLUID_FOAM` New | `bool` | `[C]` | Enables dynamic foam generation. |
+| `FLUID_FOAM_SHORE` New | `bool` | `[C]` | Enable surface foam generations at shallow block borders. |
+| `FLUID_FOAM_THRESHOLD` New | `0–15` | `[C]` | Minimal required wave height at which whitecaps generate. |
+| `FLUID_FOAM_COLOR` New | `hex` | `[C]` | Surface foam colour. |
+| `FLUID_CAUSTICS` New | `bool` | `[C]` | Enables caustic light refraction maps onto underwater surfaces. |
+| `FLUID_CAUSTICS_STRENGTH` New | `0–15` | `[C]` | Intensity scale of caustic patterns on sub-surface geometry. |
+| `FLUID_CAUSTICS_SCALE <mark>New</mark>` | `0–15` | `[C]` | Scale adjustments of caustic tiling patterns in 0.1-block intervals. |
+| `FLUID_DEPTH_COLOR` New | `hex` | `[C]` | Deepest target colour utilized for depth-based color grading gradients. |
+| `FLUID_DEPTH_FALLOFF` New | `0–15` | `[C]` | Relative depth required before colour maps completely blend into `f_depth_color`. |
+| `FLUID_BIOLUMINESCENCE` New | `bool` | `[C]` | Enables glowing particulate matter within fluid volume grids. |
+| `FLUID_BIOLUMINESCENCE_COLOR` New | `hex` | `[C]` | Fluid particle emission color glow. |
+| `FLUID_BIOLUMINESCENCE_DENSITY` New | `0–255` | `[C]` | Internal count of bioluminescent particles generated. |
+
+---
+
+## 6. Global Illumination (`gi`)
+
+*Controls indirect sky bleeding and reflective source properties.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `GLOBAL_ILLUMINATION_WORLD` | `0–15` | `[W]` | GI weight on a global scale. `0`=off, `15`=max. |
+| `GLOBAL_ILLUMINATION_BIOME` | `0–15` | `[B]` | Localized GI weight adjustments per biome profile. |
+| `GLOBAL_ILLUMINATION_COLOR` | `0–15` | `[C]` | `0`=default world colors, `1–15`=assigned index overrides. |
+| `GLOBAL_ILLUMINATION_SKY_CONTRIBUTION` New | `0–15` | `[C]` | Scale of sky-dome color bleeding across shadowed geometries. |
+| `GLOBAL_ILLUMINATION_EMISSIVE_CONTRIBUTION` New | `0–15` | `[C]` | Determines how intensely emissive block surfaces contribute to GI pipelines. |
+
+---
+
+## 7. Block Properties (`block`) New Section
+
+*Defines physical permeability, absorption rates, responses to liquids, and vertex animations.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `BLOCK_PERMABLE` | `bool` | `[BL]` | Allows fluid volumes to drop through solid blocks. |
+| `BLOCK_PERMABLE_TIME` | `0-255` | `[BL]` | Traversal calculation time for fluid to transition through, throttled by `WATER_VISCOSITY`. |
+| `BLOCK_PERMABLE_REDUCTION` | `0-255` | `[BL]` | Absorption deduction factor applied to passing fluids. |
+| `BLOCK_PERMABLE_REDICTION_MAX` | `0-255` | `[BL]` | Maximum absorption tolerance threshold before solid block saturates completely. |
+| `BLOCK_PERMABLE_DRY_TIME` | `0-255` | `[BL]` | Absolute timeframe mapping block evaporative moisture properties back to default. |
+| `BLOCK_PERMABLE_ADAPTATION` | `0-63` | `[BL]` | Determines how a fluid alters properties upon block penetration. |
+| `BLOCK_ADAPTATION` | `0-63` | `[BL]` | General trigger condition modifier for contextual environment events. |
+| `BLOCK_ADAPTATION_WATER` | `0-63` | `[BL]` | Target adaptability metric specifically when contacting water. |
+| `BLOCK_ADAPTATION_LAVA` | `0-63` | `[BL]` | Target adaptability metric specifically when contacting lava. |
+| `BLOCK_ADAPTATION_CUSTOM` | `0-63` | `[BL]` | Target adaptability metric specifically when contacting custom user fluids. |
+| `BLOCK_ADAPTATION_RAIN` | `0-63` | `[BL]` | Target adaptability metric specifically when interacting with downpour states. |
+| `BLOCK_PARTICLE_EMISSION` | `bool` | `[BL]` | Allows standalone block identities to generate native particles. |
+| `BLOCK_PARTICLE_EMSION_AMOUNT` | `0-255` | `[BL]` | Numeric volume scale of native emissions. |
+| `BLOCK_PARTICLE_EMSION_RADIUS` | `0-63` | `[BL]` | Positional bounds for particle flight pathways. |
+| `BLOCK_WAVING` | `bool` | `[BL]` | Enables custom vertex displacement mapping (leaves, tallgrass, banners). |
+| `BLOCK_WAVING_AMPLITUDE` | `0–15` | `[BL]` | Wave structural displacement depth in increments of 0.05 blocks. |
+| `BLOCK_WAVING_SPEED` | `0–15` | `[BL]` | Frequency calculations multiplier tracking vertex motions. |
+| `BLOCK_WAVING_WIND_INFLUENCE` | `0–15` | `[BL]` | Influence coefficient shifting dynamic alignments according to global `HAZE_*` data targets. |
+
+---
+
+## 8. Sky & Atmosphere (`sky`)
+
+*Calculates mathematical horizon sky models, scattering strengths, and celestial assets properties.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `STAR_TYPE` | `integer` | `[W]` | Star rendering structural formatting index. |
+| `SKY_TEXTURE_BRIGHTNESS` | `float` | `[W]` | Linear texture brightness factor for sky objects. |
+| `SKY_MODEL` New | `0–3` | `[W]` | `0`=simple gradient, `1`=Rayleigh, `2`=Mie, `3`=Preetham. |
+| `SKY_RAYLEIGH_STRENGTH` New | `0–15` | `[W]` | Rayleigh structural scattering adjustment; scales overall atmospheric blueness. |
+| `SKY_MIE_STRENGTH` New | `0–15` | `[W]` | Mie scattering; configures light-glow halos wrapped around daylight stars. |
+| `SKY_OZONE_STRENGTH` New | `0–15` | `[W]` | Ozone structural calculation factors; accentuates sunset warming profiles. |
+| `SUN_ANGULAR_SIZE` New | `float` | `[W]` | Sun structural disc perspective width in degrees (`0.5` = accurate earthly profile). |
+| `SUN_COLOR` New | `hex` | `[W]` | Target color values overriding default stellar disc colors. |
+| `SUN_CORONA_RADIUS` New | `0–15` | `[W]` | Outer radiant corona glare boundaries recorded in degree intervals. |
+| `MOON_ANGULAR_SIZE` New | `float` | `[W]` | Moon geometric size profiles mapped in target degrees. |
+| `MOON_PHASE_AFFECTS_LIGHT` New | `bool` | `[W]` | Determines if moonlight luminance correlates directly with phase states. |
+| `SKY_CUSTOM_LUT` New | `string` | `[W]` | Asset location address targeting a 3D Color Grading LUT for sky frames. |
+
+---
+
+## 9. Weather (`weather`)
+
+*Sets precipitation densities, atmospheric variations, wind gusts, and surface moisture behaviors.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `WEATHER_RAIN_DENSITY` | `0–255` | `[B]` | Active downpour droplet concentration targets. |
+| `WEATHER_RAIN_SPEED` | `0–15` | `[B]` | Falling speed of raindrops. |
+| `WEATHER_SNOW_DENSITY` New | `0–255` | `[B]` | Active snowflake generation concentrations. |
+| `WEATHER_SNOW_SIZE` New | `0–15` | `[B]` | Snowflake scaling configurations mapped to pixel sizes. |
+| `WEATHER_SNOW_ACCUMULATION` New | `bool` | `[B]` | Allows snowy precipitation vectors to create layers across level blocks. |
+| `WEATHER_WIND` New | `bool` | `[B]` | Toggles logical level integrations interacting with atmospheric winds. |
+| `WEATHER_WIND_DIRECTION` New | `0-360` | `[B]` | Rotational wind source origin headings in degrees. |
+| `WEATHER_WIND_SPEED` New | `0-255` | `[B]` | Baseline wind speed. |
+| `WEATHER_WIND_GUSTS` New | `bool` | `[B]` | Determines if periodic random wind gusts emerge over execution cycles. |
+| `WEATHER_WIND_GUSTS_INTENSITY` New | `0–255` | `[B]` | Velocity additions multiplier detailing performance spikes during gusts. |
+| `WEATHER_WIND_GUSTS_INTENSITY_VARIATION` New | `0–255` | `[B]` | Total potential noise deviations calculated across custom gust profiles. |
+| `WEATHER_WIND_GUSTS_CHANCE` New | `0–255` | `[B]` | Frequency distribution markers detailing gust intervals in minute steps. |
+| `WEATHER_WIND_GUSTS_DURATION` New | `0–255` | `[B]` | Individual gust execution timelines recorded in 10-second intervals. |
+| `WEATHER_FOG OVERRIDE` New | `bool` | `[B]` | Mandates structural storm fog render behaviors regardless of global `HAZE` flags. |
+| `WEATHER_FOG_DENSITY` New | `0–255` | `[B]` | Absolute fog density factor deployed entirely within severe storms. |
+| `WEATHER_LIGHTNING_COLOR` New | `hex` | `[B]` | Target color values tracking lightning bolts and associated screen flashing. |
+| `WEATHER_LIGHTNING_BRIGHTNESS` | `0-15` | `[B]` | Structural flash intensity scale; `15` targets values mapping out up to 45 blocks away. |
+| `WEATHER_WETNESS_RAMPUP` New | `0–255` | `[B]` | Operational seconds clock mapping full surface hydration values during rain storms. |
+| `WEATHER_WETNESS_RAMPDOWN` New | `0–255` | `[B]` | Operational seconds clock tracking surface moisture dissipation targets after rain stops. |
+
+---
+
+## 10. Shadows (`shadow`)
+
+*Sets depth map details, colored transparency filtration, and cascade configurations.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `SHADOW_CASCADES` New | `1–4` | `[W]` | Total configuration layers allocated for CSM shadow lookups. (Higher balances distant view fidelity). |
+| `SHADOW_PENUMBRA` New | `bool` | `[W]` | Toggles PCSS variable-width filter calculations (Scales from global astronomical dimensions). |
+| `SHADOW_PENUMBRA_SAMPLES` New | `4–64` | `[W]` | Lookup counts feeding penumbra maps. (Higher values yield smoother bounds, impacting overhead). |
+| `SHADOW_COLORED_TRANSMISSION` New | `bool` | `[W]` | Permits transparent level block objects to pass custom colored light maps onto shadows. |
+| `SHADOW_BIOME_TINT` New | `hex` | `[B]` | Contextual color tint vectors shifting baseline shadow regions within targeted environments. |
+
+---
+
+## 11. Biome Transitions (`biome_transition`) New Section
+
+*Determines horizontal zone blends, layering orders, and interpolation modes.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `BIOME_BLEND_RADIUS` | `0–255` | `[B]` | Total block radius boundaries deployed for blending atmospheric behaviors into adjacent regions. |
+| `BIOME_BLEND_PRIORITY` | `0–15` | `[B]` | Arbitrary structural tier markers setting context priorities when contrasting boundary regions merge. |
+| `BIOME_BLEND_PRIORITY_VALUE` | `0-255` | `[B]` | Z-ordering layout specifications tracking overlapping biome patterns. (Higher equals dominance). |
+| `BIOME_BLEND_CURVE` | `0–3` | `[B]` | Interpolation parameters mapping boundary gradients: `0`=linear, `1`=smooth, `2`=step, `3`=custom curve. |
+
+---
+
+## 12. Custom / Developer Extensions (`custom`) New Section
+
+*Provides developer tool hooks for feeding variables directly into internal system shader pipelines.*
+
+| Variable Name | Range / Type | Scope | Description |
+| --- | --- | --- | --- |
+| `CUSTOM_UNIFORM_INT` | `string:int` | `[G,L,W,BL]` | Registers a developer uniform configuration format tracking numerical integers (`name=value`). |
+| `CUSTOM_UNIFORM_FLOAT` | `string:float` | `[G,L,W,BL]` | Registers a developer uniform configuration format tracking floating point metrics. |
+| `CUSTOM_UNIFORM_VEC3` | `string:r,g,b` | `[G,L,W,BL]` | Registers a developer uniform configuration format tracking `vec3` attributes. |
+| `CUSTOM_UNIFORM_VEC4` | `string:r,g,b,a` | `[G,L,W,BL]` | Registers a developer uniform configuration format tracking `vec4` attributes. |
+| `CUSTOM_DEFINE` | `string` | `[G]` | Forces injection of a text `#define` target directive into all engine pass stages (`KEY=value`). |
+| `CUSTOM_VERTEX_SNIPPET` | `string` | `[BL]` | Identifies path targets for custom GLSL scripts bound directly onto structural vertex pass calls. |
+| `CUSTOM_FRAGMENT_SNIPPET` | `string` | `[BL]` | Identifies path targets for custom GLSL scripts bound directly onto structural fragment pass calls. |
+| `CUSTOM_COMPUTE_SNIPPET` | `string` | `[G]` | Core path pointing to GLSL compute shader execution frameworks hosting global graphic properties. |
+| `CUSTOM_TEXTURE_SLOT` | `0–7` | `[BL]` | Sets target layout slots for rendering developer custom map data maps within blocks. |
+| `CUSTOM_TEXTURE_PATH` | `string` | `[BL]` | Target location address defining data bound immediately into context definitions from `CUSTOM_TEXTURE_SLOT`. |
+| `CUSTOM_PASS_ORDER` | `0–15` | `[G]` | Pipeline execution order designations handling compute passes; lower priority runs earlier. |
+
+---
+
+> **Key for Scope Values:** > `[G]` = Global | `[W]` = World | `[B]` = Biome | `[C]` = Custom | `[L]` = Local / Layer | `[BL]` = Block
